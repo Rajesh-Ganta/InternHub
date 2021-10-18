@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  firebaseAuthURL : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCS6DF-_OVDjLHWw54oXy3In2rjhHtadpg',
   production: false
 };
 

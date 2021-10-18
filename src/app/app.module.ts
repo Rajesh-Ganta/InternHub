@@ -7,7 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { GuestDashboardComponent } from './guest-dashboard/guest-dashboard.component';
-
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +19,9 @@ import { GuestDashboardComponent } from './guest-dashboard/guest-dashboard.compo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

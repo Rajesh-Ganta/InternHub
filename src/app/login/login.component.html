@@ -1,2 +1,35 @@
-<p>login works! Bro</p>
-<p>Nice</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 mt-5 col-lg-5 mx-auto">
+      <div class="card border-0 shadow rounded-4 my-5">
+        <div class="card-body p-4 p-sm-5">
+          <h5 class="card-title text-center mb-3 fw-light fs-5">Sign In</h5>
+          <!-- For Error Modal -->
+            <div class="alert alert-light bg-danger bordered text-light shadow-sm text-center rounded" *ngIf="isValid">
+             {{ errorValue }}
+            </div>
+          <!-- For Error Modal -->
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" placeholder="S160552" [(ngModel)]="studentId">
+              <label for="floatingInput">Student Id</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" placeholder="Password" [(ngModel)]='password'>
+              <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="form-check mb-3">
+              <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+              <label class="form-check-label" for="rememberPasswordCheck">
+                Remember password
+              </label>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" (click)="login()">Sign
+                in</button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

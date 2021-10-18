@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentDashboardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
+    if(!localStorage.getItem('loginData')){
+      this.router.navigateByUrl('');
+    }
+    if((JSON.parse(localStorage.getItem('loginData')??'')).type!='studentdb'){
+      localStorage.clear();
+      this.router.navigateByUrl('');
+    }
+  }
+
+  logout(){
+    localStorage.clear();
+    this.router.navigateByUrl('');
   }
 
 }
