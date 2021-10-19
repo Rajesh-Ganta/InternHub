@@ -1,3 +1,4 @@
+import { AllPurposeService } from './../allpurposervice.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router, private allPurpose:AllPurposeService) { }
 
   ngOnInit(): void {
     if(!localStorage.getItem('loginData')){
@@ -21,7 +22,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   logout(){
-    localStorage.clear();
+    this.allPurpose.logoutUser();
     this.router.navigateByUrl('');
   }
 

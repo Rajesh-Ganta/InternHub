@@ -1,3 +1,4 @@
+import { AllPurposeService } from './../allpurposervice.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class StudentDashboardComponent implements OnInit {
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private allPurpose:AllPurposeService) { }
 
   ngOnInit(): void {
     if(!localStorage.getItem('loginData')){
@@ -21,7 +22,7 @@ export class StudentDashboardComponent implements OnInit {
   }
 
   logout(){
-    localStorage.clear();
+    this.allPurpose.logoutUser();
     this.router.navigateByUrl('');
   }
 
