@@ -1,1 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+.nav-item:hover{
+  background-color:#0d6efd;
+  cursor: pointer;
+  color: white!important;
+}

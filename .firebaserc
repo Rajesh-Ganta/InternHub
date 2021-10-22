@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "myproject-e549a": {
+      "hosting": {
+        "internhub": [
+          "myproject-e549a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "myproject-e549a"
+  }
+}

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import * as cryptoJS from 'crypto-js';
 @Injectable({providedIn: 'root'} )
 export class AllPurposeService {
-   constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) { }
 
   //for getting type of the users we use this JSON API
   usersUrl : string = "https://myproject-e549a.firebaseio.com/";
@@ -14,6 +15,10 @@ export class AllPurposeService {
   password : string = '';
   userType : string = '';
   isAuth : boolean = false;
+
+
+  //common key used for Encryption and Decryption
+  key : string = 'guru123';
 
   //for getting login data
   login(email:any,password:any){
@@ -39,5 +44,14 @@ export class AllPurposeService {
     this.userType = '';
   }
 
+
+  //for encrypting the text
+  encrypt(msg:string){
+    return cryptoJS.AES.encrypt(msg,this.key);
+  }
+  //for decrypting the text
+  decrypt(msg:any){
+    return cryptoJS.AES.decrypt(msg,this.key).toString(cryptoJS.enc.Utf8);
+  }
 
 }

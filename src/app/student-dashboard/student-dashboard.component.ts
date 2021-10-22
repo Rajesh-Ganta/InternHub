@@ -11,6 +11,8 @@ export class StudentDashboardComponent implements OnInit {
 
   constructor(private router:Router,private allPurpose:AllPurposeService) { }
 
+  name:string='';
+
   ngOnInit(): void {
     if(!localStorage.getItem('loginData')){
       this.router.navigateByUrl('');
@@ -19,6 +21,7 @@ export class StudentDashboardComponent implements OnInit {
       localStorage.clear();
       this.router.navigateByUrl('');
     }
+    this.name = this.allPurpose.userEmail;
   }
 
   logout(){

@@ -6,11 +6,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {path:"",component:LoginComponent},
-  {path:"login",component:LoginComponent},
-  {path:"studentdb",component:StudentDashboardComponent},
-  {path:"guestdb",component:GuestDashboardComponent},
-  {path:"admindb",component:AdminDashboardComponent},
+  {
+    path:"",component:LoginComponent
+  },
+  {
+    path:"login",component:LoginComponent
+  },
+  {
+    path:"studentdb",component:StudentDashboardComponent
+  },
+  {
+    path:"guestdb",component:GuestDashboardComponent
+  },
+  {
+    path:"admindb",component:AdminDashboardComponent
+  },
 ];
 
 @NgModule({
