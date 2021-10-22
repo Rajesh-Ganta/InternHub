@@ -16,13 +16,19 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideMessaging,getMessaging } from '@angular/fire/messaging';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { ProfileComponent } from './student-dashboard/profile/profile.component';
+import { NotificationsComponent } from './student-dashboard/notifications/notifications.component';
+import { DashboardComponent } from './student-dashboard/dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     StudentDashboardComponent,
     AdminDashboardComponent,
-    GuestDashboardComponent
+    GuestDashboardComponent,
+    ProfileComponent,
+    NotificationsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,11 @@ import { environment } from 'src/environments/environment';
 import * as cryptoJS from 'crypto-js';
 @Injectable({providedIn: 'root'} )
 export class AllPurposeService {
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {
+    if(localStorage.getItem('loginData')){
+      this.userEmail = JSON.parse(localStorage.getItem('loginData')??'').name.toString();
+    }
+  }
 
   //for getting type of the users we use this JSON API
   usersUrl : string = "https://myproject-e549a.firebaseio.com/";
@@ -47,7 +51,7 @@ export class AllPurposeService {
 
   //for encrypting the text
   encrypt(msg:string){
-    return cryptoJS.AES.encrypt(msg,this.key);
+    return cryptoJS.AES.encrypt(msg,this.key).toString();
   }
   //for decrypting the text
   decrypt(msg:any){
