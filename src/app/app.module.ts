@@ -22,6 +22,7 @@ import { DashboardComponent } from './student-dashboard/dashboard/dashboard.comp
 import { PostsComponent } from './student-dashboard/posts/posts.component';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
 import { PostcardComponent } from './shared/postcard/postcard.component';
+import { HallofameComponent } from './shared/hallofame/hallofame.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,7 +35,8 @@ import { PostcardComponent } from './shared/postcard/postcard.component';
     DashboardComponent,
     PostsComponent,
     SideNavComponent,
-    PostcardComponent
+    PostcardComponent,
+    HallofameComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { HallofameComponent } from './shared/hallofame/hallofame.component';
 import { PostsComponent } from './student-dashboard/posts/posts.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { GuestDashboardComponent } from './guest-dashboard/guest-dashboard.component';
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path:'posts',
         component:PostsComponent
+      },
+      {
+        path:'halloffame',
+        component:HallofameComponent
       },
       {
         path:'**',
