@@ -1,0 +1,26 @@
+<div class="header h4 mt-2 p-2 text-center">
+  InternHub
+</div>
+<div class="nav d-flex flex-column">
+  <div class="nav-item bordered rounded  shadow-sm m-1" routerLink="dash" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">
+      Home
+    </div>
+  </div>
+  <div class="nav-item bordered rounded text-dark shadow-sm m-1" routerLink="profile" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">Profile</div>
+  </div>
+  <div class="nav-item bordered rounded text-dark shadow-sm m-1" routerLink="notifications" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">Notifications</div>
+  </div>
+  <div class="nav-item bordered rounded text-dark shadow-sm m-1"  routerLink="posts" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">Posts</div>
+  </div>
+  <div class="nav-item bordered rounded text-dark shadow-sm m-1">
+    <div class="navLink p-1 mx-2 m-2" (click)="logout()">Logout</div>
+  </div>
+</div>

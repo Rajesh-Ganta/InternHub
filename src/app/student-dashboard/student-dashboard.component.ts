@@ -24,9 +24,5 @@ export class StudentDashboardComponent implements OnInit {
     this.name = this.allPurpose.userEmail;
   }
 
-  logout(){
-    this.allPurpose.logoutUser();
-    this.router.navigateByUrl('');
-  }
 
 }

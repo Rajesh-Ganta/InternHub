@@ -1,3 +1,4 @@
+import { PostsComponent } from './student-dashboard/posts/posts.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { GuestDashboardComponent } from './guest-dashboard/guest-dashboard.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
@@ -35,6 +36,14 @@ const routes: Routes = [
       {
         path:'notifications',
         component:NotificationsComponent
+      },
+      {
+        path:'posts',
+        component:PostsComponent
+      },
+      {
+        path:'**',
+        redirectTo:'dash'
       }
     ]
   },

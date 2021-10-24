@@ -19,6 +19,9 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ProfileComponent } from './student-dashboard/profile/profile.component';
 import { NotificationsComponent } from './student-dashboard/notifications/notifications.component';
 import { DashboardComponent } from './student-dashboard/dashboard/dashboard.component';
+import { PostsComponent } from './student-dashboard/posts/posts.component';
+import { SideNavComponent } from './shared/side-nav/side-nav.component';
+import { PostcardComponent } from './shared/postcard/postcard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +31,10 @@ import { DashboardComponent } from './student-dashboard/dashboard/dashboard.comp
     GuestDashboardComponent,
     ProfileComponent,
     NotificationsComponent,
-    DashboardComponent
+    DashboardComponent,
+    PostsComponent,
+    SideNavComponent,
+    PostcardComponent
   ],
   imports: [
     BrowserModule,

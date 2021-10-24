@@ -1,37 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-2 bg-white" style="height: 100vh;">
-      <div class="header h4 mt-2 p-2 text-center">
-        InternHub
-      </div>
-      <div class="nav d-flex flex-column">
-        <div class="nav-item bordered rounded  shadow-sm m-1" routerLink="dash" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
-          true}">
-          <div class="navLink p-1 mx-2 m-2">
-            Home
-          </div>
-        </div>
-        <div class="nav-item bordered rounded text-dark shadow-sm m-1" routerLink="profile" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
-          true}">
-          <div class="navLink p-1 mx-2 m-2">Profile</div>
-        </div>
-        <div class="nav-item bordered rounded text-dark shadow-sm m-1" routerLink="notifications" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
-          true}">
-          <div class="navLink p-1 mx-2 m-2">Notifications</div>
-        </div>
-        <div class="nav-item bordered rounded text-dark shadow-sm m-1">
-          <div class="navLink p-1 mx-2 m-2">Home</div>
-        </div>
-        <div class="nav-item bordered rounded text-dark shadow-sm m-1">
-          <div class="navLink p-1 mx-2 m-2" (click)="logout()">Logout</div>
-        </div>
-      </div>
+      <app-side-nav></app-side-nav>
     </div>
     <div class="col ml-1" style="height: 100vh;width: 100%;">
       <div class="breadcrumb bg-white w-100 p-3 mt-1 shadow-sm rounded">
         Welcome {{name}}
       </div>
-      <div class="mainDiv ml-1 w-100 bg-danger">
+      <div class="mainDiv ml-1 w-100 bg-light shadow-sm rounded p-2">
         <router-outlet></router-outlet>
       <!-- router outlet for displaying child components  -->
       </div>
