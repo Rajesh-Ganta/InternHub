@@ -1,6 +1,6 @@
+import { AddUsersComponent } from './admin-dashboard/add-users/add-users.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -23,8 +23,11 @@ import { PostsComponent } from './student-dashboard/posts/posts.component';
 import { SideNavComponent } from './shared/side-nav/side-nav.component';
 import { PostcardComponent } from './shared/postcard/postcard.component';
 import { HallofameComponent } from './shared/hallofame/hallofame.component';
+import { NotItemComponent } from './shared/not-item/not-item.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
+    AddUsersComponent,
     AppComponent,
     LoginComponent,
     StudentDashboardComponent,
@@ -36,9 +39,11 @@ import { HallofameComponent } from './shared/hallofame/hallofame.component';
     PostsComponent,
     SideNavComponent,
     PostcardComponent,
-    HallofameComponent
+    HallofameComponent,
+    NotItemComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

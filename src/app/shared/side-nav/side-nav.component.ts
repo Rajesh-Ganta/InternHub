@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class SideNavComponent implements OnInit {
 
   constructor(private allPurpose:AllPurposeService,private router:Router) { }
-
+  userType : string =  this.allPurpose.userType;
   ngOnInit(): void {
   }
   logout(){

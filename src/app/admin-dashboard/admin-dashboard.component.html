@@ -1,2 +1,17 @@
-<div>ADMIN</div>
-<button class="btn btn-danger" (click)="logout()">Logout</button>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2 bg-white rounded shadow-sm" style="height: 100vh;">
+      <app-side-nav></app-side-nav>
+    </div>
+    <div class="col ml-1" style="height: 100vh;width: 100%;">
+      <div class="breadcrumb bg-white w-100 p-3 mt-1 shadow-sm rounded h6">
+        Welcome {{name}}
+      </div>
+      <div class="mainDiv ml-1 w-100 bg-light shadow-sm rounded p-2">
+        <router-outlet></router-outlet>
+      <!-- router outlet for displaying child components  -->
+      </div>
+    </div>
+  </div>
+</div>
+

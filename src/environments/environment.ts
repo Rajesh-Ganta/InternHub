@@ -14,6 +14,7 @@ export const environment = {
     measurementId: 'G-BE20K0J3EK',
   },
   firebaseAuthURL : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCS6DF-_OVDjLHWw54oXy3In2rjhHtadpg',
+  firebaseSignUp :"https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCS6DF-_OVDjLHWw54oXy3In2rjhHtadpg",
   production: false,
   // firebaseConfig : {
   //   apiKey: "YOUR_API_KEY",

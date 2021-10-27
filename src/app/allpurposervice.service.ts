@@ -7,6 +7,8 @@ export class AllPurposeService {
   constructor(private http:HttpClient) {
     if(localStorage.getItem('loginData')){
       this.userEmail = JSON.parse(localStorage.getItem('loginData')??'').name.toString();
+      this.userType = JSON.parse(localStorage.getItem('loginData')??'').type.toString().slice(0,-2);
+      // alert(this.userType);
     }
   }
 
