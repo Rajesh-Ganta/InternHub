@@ -13,7 +13,7 @@ export class AllPurposeService {
   }
 
   //for getting type of the users we use this JSON API
-  usersUrl : string = "https://myproject-e549a.firebaseio.com/";
+  usersUrl : string = "http://localhost:8000/";
 
   //for storing sigin details
   loginId : string ='';
@@ -38,7 +38,7 @@ export class AllPurposeService {
 
   //For getting type of the user
   getUsers(email:string){
-    return this.http.get(this.usersUrl+"users.json");
+    return this.http.get(this.usersUrl);
   }
 
   //for logging out user

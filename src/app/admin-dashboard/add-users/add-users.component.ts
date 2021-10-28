@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { AllPurposeService } from './../../allpurposervice.service';
 import { Component, OnInit } from '@angular/core';
+import { provideStorage,getStorage } from '@angular/fire/storage';
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -15,6 +17,8 @@ export class AddUsersComponent implements OnInit {
   userType : string = "student";
   studentId : string = "";
   showValid : boolean = false;
+  imgUrl : string = '';
+  data : any ;
 
   constructor(private allPurpose:AllPurposeService,private http:HttpClient) { }
 
@@ -26,11 +30,27 @@ export class AddUsersComponent implements OnInit {
       console.log(res);
     },(err)=>{
       console.log(err);
-
       this.showValid = true;
     },()=>{
-
+      this.postData();
     });
+    // this.postData();
+  }
 
+  postData(){
+    let header = new HttpHeaders()
+   .set('content-type','application/json')
+   .set('Access-Control-Allow-Origin', '*');
+    this.http.post("http://localhost:8000/userdata",{"data":{sid:this.studentId,name:this.studentId,email:this.email,userType:this.userType}},{headers:header}).subscribe((res)=>{
+      console.log(res);
+    },(err)=>{
+      console.log(err);
+    },()=>{
+      alert("User Added Successfully!!!");
+      this.studentId = '';
+      this.email = '';
+      this.userType = '';
+      this.password = '';
+    })
   }
 }
