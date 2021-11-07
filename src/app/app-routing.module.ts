@@ -1,3 +1,5 @@
+import { ApplicationPreviewComponent } from './shared/application-preview/application-preview.component';
+import { CreateApplicationComponent } from './admin-dashboard/create-application/create-application.component';
 import { AddUsersComponent } from './admin-dashboard/add-users/add-users.component';
 import { HallofameComponent } from './shared/hallofame/hallofame.component';
 import { PostsComponent } from './student-dashboard/posts/posts.component';
@@ -87,6 +89,14 @@ const routes: Routes = [
       {
         path:'addusers',
         component:AddUsersComponent,
+      },
+      {
+        path:'create-application',
+        component:CreateApplicationComponent
+      },
+      {
+        path:'application-view',
+        component:ApplicationPreviewComponent
       },
       {
         path:'**',

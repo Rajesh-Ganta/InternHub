@@ -1,3 +1,4 @@
+import { AllPurposeService } from './../../allpurposervice.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  constructor(private allPurposeService:AllPurposeService){
 
+  }
+  userType : any = this.allPurposeService.userType;
   dashboardStats : any = [
     {
       text:"No of Applications",
@@ -26,8 +30,6 @@ export class DashboardComponent implements OnInit {
       num:1
     }
   ]
-
-  constructor() { }
 
   ngOnInit(): void {
   }
