@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminDashboardComponent implements OnInit {
 
+  name :string = "Admin";
+
   constructor(private router:Router, private allPurpose:AllPurposeService) { }
 
   ngOnInit(): void {

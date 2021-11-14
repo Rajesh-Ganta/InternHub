@@ -7,11 +7,13 @@ export class AllPurposeService {
   constructor(private http:HttpClient) {
     if(localStorage.getItem('loginData')){
       this.userEmail = JSON.parse(localStorage.getItem('loginData')??'').name.toString();
+      this.userType = JSON.parse(localStorage.getItem('loginData')??'').type.toString().slice(0,-2);
+      // alert(this.userType);
     }
   }
 
   //for getting type of the users we use this JSON API
-  usersUrl : string = "https://myproject-e549a.firebaseio.com/";
+  usersUrl : string = "http://localhost:8000/";
 
   //for storing sigin details
   loginId : string ='';
@@ -36,7 +38,7 @@ export class AllPurposeService {
 
   //For getting type of the user
   getUsers(email:string){
-    return this.http.get(this.usersUrl+"users.json");
+    return this.http.get(this.usersUrl);
   }
 
   //for logging out user

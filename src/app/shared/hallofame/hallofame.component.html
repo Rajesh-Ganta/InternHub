@@ -1,0 +1,19 @@
+<div class="halloffame">
+  <div class="h4 text-primary p-1 m-2">Hall of Fame</div>
+    <div class="row">
+      <div class="col-sm-2" *ngFor="let i of selectedStudents">
+        <div class="card text-center p-2 m-2 shadow">
+            <div class="c-image m-2">
+                <img class="rounded-circle shadow bordered" width="100px" height="100px" src="{{i.profUrl}}" alt="img">
+            </div>
+            <div class="title m-2 h6">
+                {{i.name}}
+            </div>
+            <div class="id m-2">
+                {{i.sid}}
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+

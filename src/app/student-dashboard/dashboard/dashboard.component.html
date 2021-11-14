@@ -1,1 +1,22 @@
-<p>dashboard works!</p>
+<div class="row m-1 p-1">
+  <div class="head p-1 m-2 text-primary h4">
+    DashBoard
+  </div>
+    <div class="col-sm-3" *ngFor="let i of dashboardStats">
+      <div class="card p-3 dashcard">
+        <div class="subtitle h2">{{i.num}}</div>
+        <div class="title text-muted mx-1">{{i.text}}</div>
+      </div>
+  </div>
+</div>
+
+<div class="main-posts m-1 p-1">
+  <div *ngIf="userType!='admin'">
+    <div class="head p-1 m-2 text-primary h4">Recently Applied Applications</div>
+    <div *ngFor="let i of [1,2]">
+      <app-not-item></app-not-item>
+    </div>
+  </div>
+  <div class="head p-1 m-2 text-primary h4">Recent<span *ngIf="userType=='admin'">ly Added</span> Posts</div>
+  <app-postcard></app-postcard>
+</div>

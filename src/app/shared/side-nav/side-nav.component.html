@@ -1,0 +1,53 @@
+<div class="header h4 mt-2 p-2 text-center text-shadow">
+  InternHub
+</div>
+<div class="nav d-flex flex-column">
+  <div class="nav-item   rounded  shadow m-1" routerLink="dash" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">
+      <i class="bi bi-house-door h4"></i> Home
+    </div>
+  </div>
+  <div class="nav-item   rounded text-dark shadow m-1" routerLink="profile" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">
+      <i class="bi bi-person h4"></i> Profile
+    </div>
+  </div>
+  <div class="nav-item   rounded text-dark shadow m-1" routerLink="notifications" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">
+      <i class="bi bi-bell h4"></i> Notifications
+    </div>
+  </div>
+  <div class="nav-item   rounded text-dark shadow m-1"  routerLink="posts" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">
+      <i class="bi bi-mailbox h4"></i> Posts
+    </div>
+  </div>
+  <div class="nav-item   rounded text-dark shadow m-1"  routerLink="halloffame" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+    true}">
+    <div class="navLink p-1 mx-2 m-2">
+      <i class="bi bi-people"></i> Hall of Fame
+    </div>
+  </div>
+  <div *ngIf="userType=='admin'">
+    <div class="nav-item  rounded text-dark shadow m-1"  routerLink="addusers" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+      true}">
+      <div class="navLink p-1 mx-2 m-2">
+        <i class="bi bi-person-plus"></i> Add Users
+      </div>
+    </div>
+    <div class="nav-item  rounded text-dark shadow m-1"  routerLink="create-application" routerLinkActive="active-link"  [routerLinkActiveOptions]="{exact:
+      true}">
+      <div class="navLink p-1 mx-2 m-2">
+        <i class="bi bi-pencil-square"></i> Create Post
+      </div>
+    </div>
+  </div>
+  <div class="nav-item   rounded text-dark shadow m-1">
+    <div class="navLink p-1 mx-2 m-2" (click)="logout()">
+      <i class="bi bi-box-arrow-right h4"></i> Logout</div>
+  </div>
+</div>

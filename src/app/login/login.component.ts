@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
       (res: any) => {
         Object.keys(res).forEach((k) => {
           if (res[k].email == this.studentId) {
-            this.userType = res[k].userType;
+            this.userType = res[k].user_type;
           }
         });
         console.log(this.userType);

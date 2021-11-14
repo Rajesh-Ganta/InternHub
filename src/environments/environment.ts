@@ -1,7 +1,6 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   firebase: {
     projectId: 'myproject-e549a',
@@ -13,8 +12,13 @@ export const environment = {
     messagingSenderId: '1032488172835',
     measurementId: 'G-BE20K0J3EK',
   },
-  firebaseAuthURL : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCS6DF-_OVDjLHWw54oXy3In2rjhHtadpg',
+  firebaseAuthURL:
+    'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCS6DF-_OVDjLHWw54oXy3In2rjhHtadpg',
+  firebaseSignUp:
+    'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCS6DF-_OVDjLHWw54oXy3In2rjhHtadpg',
   production: false,
+  useEmulators: true,
+
   // firebaseConfig : {
   //   apiKey: "YOUR_API_KEY",
   //   authDomain: "YOUR_AUTH_DOMAIN",

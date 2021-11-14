@@ -1,3 +1,8 @@
+import { ApplicationPreviewComponent } from './shared/application-preview/application-preview.component';
+import { CreateApplicationComponent } from './admin-dashboard/create-application/create-application.component';
+import { AddUsersComponent } from './admin-dashboard/add-users/add-users.component';
+import { HallofameComponent } from './shared/hallofame/hallofame.component';
+import { PostsComponent } from './student-dashboard/posts/posts.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { GuestDashboardComponent } from './guest-dashboard/guest-dashboard.component';
 import { StudentDashboardComponent } from './student-dashboard/student-dashboard.component';
@@ -35,6 +40,18 @@ const routes: Routes = [
       {
         path:'notifications',
         component:NotificationsComponent
+      },
+      {
+        path:'posts',
+        component:PostsComponent
+      },
+      {
+        path:'halloffame',
+        component:HallofameComponent
+      },
+      {
+        path:'**',
+        redirectTo:'dash'
       }
     ]
   },
@@ -42,7 +59,50 @@ const routes: Routes = [
     path:"guestdb",component:GuestDashboardComponent
   },
   {
-    path:"admindb",component:AdminDashboardComponent
+    path:"admindb",component:AdminDashboardComponent,
+    children: [
+      {
+        path:'',
+        redirectTo:'dash',
+        pathMatch:'full'
+      },
+      {
+        path:'dash',
+        component:DashboardComponent
+      },
+      {
+        path:'profile',
+        component: ProfileComponent
+      },
+      {
+        path:'notifications',
+        component:NotificationsComponent
+      },
+      {
+        path:'posts',
+        component:PostsComponent
+      },
+      {
+        path:'halloffame',
+        component:HallofameComponent
+      },
+      {
+        path:'addusers',
+        component:AddUsersComponent,
+      },
+      {
+        path:'create-application',
+        component:CreateApplicationComponent
+      },
+      {
+        path:'application-view',
+        component:ApplicationPreviewComponent
+      },
+      {
+        path:'**',
+        redirectTo:'dash'
+      }
+    ]
   },
 ];
 
