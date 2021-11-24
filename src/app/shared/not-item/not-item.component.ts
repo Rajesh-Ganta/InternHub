@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-not-item',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotItemComponent implements OnInit {
 
-  constructor() { }
+  @Input("data") data:any;
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
+  }
+
+  deleteNot(id:any){
+    let header = new HttpHeaders()
+   .set('content-type','application/json')
+   .set('Access-Control-Allow-Origin', '*');
+    this.http.post('http://localhost:8000/delete_not',{id:id},{headers:header}).subscribe((res)=>{
+      console.log(res);
+      window.location.reload();
+    })
   }
 
 }

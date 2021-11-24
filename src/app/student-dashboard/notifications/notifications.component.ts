@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationsComponent implements OnInit {
 
-  constructor() { }
+  notifications : any = [];
+
+  constructor(private http:HttpClient) { }
 
   ngOnInit(): void {
+    this.getNotifications();
+  }
+
+  getNotifications(){
+    this.http.get("http://localhost:8000/notify").subscribe((res)=>{
+      this.notifications = res;
+      console.log(this.notifications);
+
+    })
   }
 
 }

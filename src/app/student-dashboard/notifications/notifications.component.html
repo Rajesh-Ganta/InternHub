@@ -1,4 +1,6 @@
 <div class="head p-1 m-2 text-primary h4">
   Notifications
 </div>
-<app-not-item></app-not-item>
+<div *ngFor="let not of notifications">
+  <app-not-item [data]="not"></app-not-item>
+</div>
