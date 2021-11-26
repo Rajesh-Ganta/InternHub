@@ -1,4 +1,4 @@
-<div class="card m-3 border border-secondary shadow-sm rounded">
+<div class="card m-3 border border-secondary shadow-sm rounded" *ngIf="!data.isDelete">
   <div class="card-body">
     <div class="row">
       <div class="col-sm-1">
@@ -6,16 +6,16 @@
       </div>
       <div class="col">
         <div class="note-text h5">
-          Microsoft with 100 lpa offer
+          {{data.company_name}}
         </div>
         <div class="note-sub text-muted">
-            Future is here
+            {{data.tag_line}}
         </div>
       </div>
       <div class="col-sm-2">
           <div class="viewitem">
             <button type="button" class="btn btn-outline-primary">View</button>
-            <button type="button" class="btn btn-outline-secondary mx-3">Delete</button>
+            <button type="button" class="btn btn-outline-secondary mx-3" (click)="deleteNot(data.notification_id)">Delete</button>
           </div>
       </div>
     </div>

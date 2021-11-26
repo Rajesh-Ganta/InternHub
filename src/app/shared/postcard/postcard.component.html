@@ -13,10 +13,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>21</th>
+          <tr *ngFor="let i of [1,2,3,4]">
+            <th>{{i}}</th>
             <th scope="row">
-              <img class="img-fluid rounded-circle" src="icon.png" style="width: 50px;" alt="logo">
+              <img class="img-fluid rounded-circle" src="data:image/png;base64,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" style="width: 50px;" alt="logo">
               Wipro
             </th>
             <td>Job</td>
@@ -25,40 +25,8 @@
             <td>26-10-2022</td>
             <td>
               <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i></button>
-              <button class="btn btn-primary"><i class="fa fa-check" style="font-size:15px"></i></button>
-              <button class="btn btn-danger"><i class="fa fa-close" style="font-size:15px"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <th>21</th>
-            <th scope="row">
-              <img class="img-fluid rounded-circle" src="icon.png" style="width: 50px;" alt="logo">
-              Wipro
-            </th>
-            <td>Job</td>
-            <td>Project Engineer</td>
-            <td>3.5 LPA</td>
-            <td>26-10-2022</td>
-            <td>
-              <button class="btn btn-primary p-2 m-1"><i class="fa fa-eye" aria-hidden="true"></i></button>
-              <button class="btn btn-primary p-1 m-1"><i class="fa fa-check" style="font-size:15px"></i></button>
-              <button class="btn btn-danger"><i class="fa fa-close" style="font-size:15px"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <th>21</th>
-            <th scope="row">
-              <img class="img-fluid rounded-circle" src="icon.png" style="width: 50px;" alt="logo">
-              Wipro
-            </th>
-            <td>Job</td>
-            <td>Project Engineer</td>
-            <td>3.5 LPA</td>
-            <td>26-10-2022</td>
-            <td>
-              <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i></button>
-              <button class="btn btn-primary"><i class="fa fa-check" style="font-size:15px"></i></button>
-              <button class="btn btn-danger"><i class="fa fa-close" style="font-size:15px"></i></button>
+              <button class="btn btn-primary mx-1"><i class="fa fa-check" style="font-size:15px"></i></button>
+              <button class="btn btn-danger mx-1"><i class="bi bi-x-circle" style="font-size:15px"></i></button>
             </td>
           </tr>
         </tbody>
