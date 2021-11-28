@@ -52,10 +52,17 @@ export class ProfileComponent implements OnInit {
   pathOfFile: string = '';
 
 
+  currentUser : string = '';
+
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let x:any = JSON.parse(localStorage.getItem('loginData')??'');
+    this.currentUser = x.type;
+    console.log(this.currentUser);
+
+  }
 
   nextStep() {
     this.step1 = false;
@@ -117,5 +124,8 @@ export class ProfileComponent implements OnInit {
       pincode: this.pin,
     };
     console.log(data);
+  }
+  submitEmployeeProfile(){
+    return
   }
 }

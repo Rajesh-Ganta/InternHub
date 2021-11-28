@@ -12,10 +12,10 @@ export class PostcardComponent implements OnInit {
   notices:any = [];
 
   constructor(private http:HttpClient) {
-    this.get_notices();
   }
 
   ngOnInit(): void {
+    this.get_notices();
   }
 
   public get_notices()
@@ -47,6 +47,7 @@ export class PostcardComponent implements OnInit {
       console.log(err);
     },()=>{
       alert("Notice Deleted!!!");
+      window.location.reload();
     })
   }
 
