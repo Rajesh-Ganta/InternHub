@@ -9,6 +9,7 @@
           class="form-control"
           id="inputName"
           placeholder="e.g. Salesforce"
+          [(ngModel)]= "company_name"
         />
       </div>
       <div class="col">
@@ -18,17 +19,19 @@
           class="form-control"
           id="inputSector"
           placeholder="e.g. IT Services"
+          [(ngModel)]= "company_sector"
         />
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6">
-        <label for="inputWebsite" class="p-2">Website</label>
+        <label for="inputLocation" class="p-2">Website</label>
         <input
           type="url"
           class="form-control"
           id="inputWebsite"
           placeholder="e.g. www.salesforce.com"
+          [(ngModel)]= "company_website"
         />
       </div>
       <div class="col col-md-6">
@@ -38,16 +41,18 @@
           class="form-control"
           id="inputDate"
           placeholder="Date of Visit"
+          [(ngModel)]= "visit_date"
         />
       </div>
     </div>
     <div class="col">
-      <label for="input_logo" class="p-2">Company Logo Url</label>
+      <label for="inputLocation" class="p-2">Company Logo Url</label>
         <input
-          type="text"
+          type="url"
           class="form-control"
-          id="input_logo"
+          id="inputWebsite"
           placeholder="e.g. data:logo_tcs.png"
+          [(ngModel)]= "logo_url"
         />
     </div>
     <div class="col">
@@ -57,16 +62,15 @@
         id="exampleFormControlTextarea1"
         rows="3"
         placeholder="Apartment, studio, or floor"
+        [(ngModel)]= "address"
       ></textarea>
     </div>
     <div class="row">
       <div class="col col-md-6">
-        <label for="inputType" class="p-2"
-          >Registration Type(Online/Offline)</label>
-        <select name="" id="" class="form-select">
-          <option value=""></option>
+        <label for="inputType" class="p-2">Registration Type(Online/Offline)</label>
+        <select name="" id="inputType" class="form-select" [(ngModel)]= "registration_type">
           <option value="Online">Online</option>
-          <option value="Offline">Offline</option>
+          <option value="Offline" selected>Offline</option>
         </select>
       </div>
       <div class="col col-md-6">
@@ -76,18 +80,18 @@
           class="form-control"
           id="inputContact"
           placeholder="H.R Executive"
+          [(ngModel)]= "poc"
         />
       </div>
     </div>
     <div class="row">
       <div class="col col-md-6">
-        <label for="inputLocation" class="p-2"
-          >Point of Contact Email Mobile</label
-        >
+        <label for="inputLocation" class="p-2">Point of Contact Email Mobile</label>
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
           rows="3"
+          [(ngModel)]= "poc_email_phone"
         ></textarea>
       </div>
       <div class="col col-md-6">
@@ -96,6 +100,7 @@
           class="form-control"
           id="exampleFormControlTextarea1"
           rows="3"
+          [(ngModel)]= "job_description"
         ></textarea>
       </div>
     </div>
@@ -108,6 +113,7 @@
           class="form-control"
           id="inputPosting"
           placeholder="e.g. Hyderabad"
+          [(ngModel)]= "posting_place"
         />
       </div>
       <div class="col col-md-6">
@@ -117,6 +123,7 @@
           class="form-control"
           id="inputPkg"
           placeholder="e.g. 6LPA"
+          [(ngModel)]= "package_details"
         />
       </div>
     </div>
@@ -129,17 +136,17 @@
           id="exampleFormControlTextarea1"
           rows="3"
           placeholder="e.g. Minimum 60%"
+          [(ngModel)]= "eligibility_criteria"
         ></textarea>
       </div>
       <div class="col col-md-6">
-        <label for="inputLocation" class="p-2"
-          >Bond Details(If Applicable)</label
-        >
+        <label for="inputLocation" class="p-2">Bond Details(If Applicable)</label>
         <textarea
           class="form-control"
           id="exampleFormControlTextarea1"
           rows="3"
           placeholder="e.g. 1 year bond"
+          [(ngModel)]= "bond_details"
         ></textarea>
       </div>
     </div>
@@ -152,6 +159,7 @@
           class="form-control"
           id="inputWebsite"
           placeholder="e.g. Duration"
+          [(ngModel)]= "job_duration"
         />
       </div>
       <div class="col col-md-6">
@@ -161,6 +169,7 @@
           class="form-control"
           id="inputType"
           placeholder="e.g. 20,000"
+          [(ngModel)]= "stiphend"
         />
       </div>
     </div>
@@ -173,13 +182,13 @@
           class="form-control"
           id="inputWebsite"
           placeholder="e.g. Associate System Engineer"
+          [(ngModel)]= "job_role"
         />
       </div>
       <div class="col">
         <label for="inputType" class="p-2">Type of Recruit</label>
-        <select name="" id="" class="form-select">
-          <option value=""></option>
-          <option value="Internship">Internship</option>
+        <select name="" id="" class="form-select" [(ngModel)]= "recruitment_type">
+          <option value="Internship" selected>Internship</option>
           <option value="Only Job">Only Job</option>
           <option value="Internship with Job">Internship with Job</option>
         </select>
@@ -191,6 +200,7 @@
           class="form-control"
           id="inputWebsite"
           placeholder="e.g. 100"
+          [(ngModel)]= "number_recruits"
         />
       </div>
     </div>
@@ -198,64 +208,48 @@
       <div class="col col-md-6">
         <label for="inputLocation" class="p-2">Eligible Branch</label>
       </div>
-      <div class="mx-2">
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox1"
-            value="CSE"
-          />
-          <label class="form-check-label" for="inlineCheckbox1">CSE</label>
+      <div class="row">
+        <div class="col">
+          <label class="p-2">CSE</label>
+          <select class="form-select" [(ngModel)]= "cse">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
         </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input p-2"
-            type="checkbox"
-            id="inlineCheckbox2"
-            value="ECE"
-          />
-          <label class="form-check-label" for="inlineCheckbox2">ECE</label>
+        <div class="col">
+          <label class="p-2">ECE</label>
+          <select class="form-select" [(ngModel)]= "ece">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
         </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox3"
-            value="MECH"
-          />
-          <label class="form-check-label" for="inlineCheckbox3">MECH</label>
+        <div class="col">
+          <label class="p-2">MECH</label>
+          <select class="form-select" [(ngModel)]= "mech">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
         </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox3"
-            value="CIVIL"
-          />
-          <label class="form-check-label" for="inlineCheckbox3"
-            >CIVIL</label
-          >
+        <div class="col">
+          <label class="p-2">CIVIL</label>
+          <select class="form-select" [(ngModel)]= "civil">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
         </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox3"
-            value="CHEMICAL"
-          />
-          <label class="form-check-label" for="inlineCheckbox3"
-            >CHEMICAL</label
-          >
+        <div class="col">
+          <label class="p-2">CHEMICAL</label>
+          <select class="form-select" [(ngModel)]= "chem">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
         </div>
-        <div class="form-check form-check-inline">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            id="inlineCheckbox3"
-            value="MME"
-          />
-          <label class="form-check-label" for="inlineCheckbox3">MME</label>
+        <div class="col">
+          <label class="p-2">MME</label>
+          <select class="form-select" [(ngModel)]= "mme">
+            <option value="Y">Y</option>
+            <option value="N">N</option>
+          </select>
         </div>
       </div>
     </div>
@@ -263,28 +257,28 @@
   <div class="row">
     <div class="col">
       <label for="inputResume" class="p-2">Resume Shortlist</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "resume_shortlist">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
     </div>
     <div class="col">
       <label for="inputType" class="p-2">Online Test</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "online_test">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
     </div>
     <div class="col">
       <label for="inputResume" class="p-2">Aptitude Test</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "aptitude_test">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
     </div>
     <div class="col">
       <label for="inputType" class="p-2">Technical Test</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "technical_test">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
@@ -293,28 +287,28 @@
   <div class="row">
     <div class="col">
       <label for="inputResume" class="p-2">Group Discussion</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "group_discussion">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
     </div>
     <div class="col">
       <label for="inputType" class="p-2">Technical Interview</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "technical_interview">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
     </div>
     <div class="col">
       <label for="inputResume" class="p-2">MR Interview</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "mr_interview">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
     </div>
     <div class="col">
       <label for="inputType" class="p-2">HR Interview</label>
-      <select name="" id="" class="form-select">
+      <select name="" id="" class="form-select" [(ngModel)]= "hr_interview">
         <option value="Y">Y</option>
         <option value="N">N</option>
       </select>
@@ -329,6 +323,7 @@
         id="exampleFormControlTextarea1"
         rows="3"
         placeholder="e.g. Minimum 60%"
+        [(ngModel)]= "other_details"
       ></textarea>
     </div>
     <div class="col col-md-6">
@@ -338,9 +333,24 @@
         id="exampleFormControlTextarea1"
         rows="3"
         placeholder="e.g. 1 year bond"
+        [(ngModel)]= "third_party_details"
       ></textarea>
     </div>
   </div>
+  <div class="row">
+    <div>
+      <div class="form-check form-check-inline">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="inlineCheckbox1"
+          value="mail"
+        />
+        <label class="form-check-label" >Notify the students with Mail</label>
+      </div>
+    </div>
+  </div>
+
 
   <button class="btn btn-primary m-2" (click)="submitData()">
     Submit

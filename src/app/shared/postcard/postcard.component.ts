@@ -37,7 +37,7 @@ export class PostcardComponent implements OnInit {
 
   view_notice(i: any)
   {
-    console.log(this.notices[i]);
+    console.log(i);
   }
 
   delete_notice(notice_id: any){
