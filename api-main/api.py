@@ -214,9 +214,6 @@ async def mail(req: Request):
   return send_mails(data["mail"])
 
 
-
-
-
 #insert
 #http requests
 # post , get
