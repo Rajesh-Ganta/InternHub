@@ -98,8 +98,8 @@ async def del_not(req:Request):
 
 def view_note_data(id):
     con=sql.connect("internhub.db")
-    sql="UPDATE NOTIFICATION SET isViewed = ? WHERE notification_id = ?"
-    con.execute(sql,("1",id))
+    query="UPDATE NOTIFICATION SET isViewed = ? WHERE notification_id = ?"
+    con.execute(query,("1",id))
     con.commit()
     con.close()
 
