@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { AllPurposeService } from 'src/app/allpurposervice.service';
 
 @Component({
   selector: 'app-create-application',
@@ -27,26 +28,28 @@ export class CreateApplicationComponent implements OnInit {
   stiphend = "";
   job_role = "";
   recruitment_type = "";
-  number_recruits = "";
-  cse = "";
-  ece = "";
-  mech = "";
-  civil = "";
-  chem = "";
-  mme = "";
-  resume_shortlist = "";
-  online_test = "";
-  aptitude_test = '';
-  technical_test = '';
-  group_discussion = '';
-  technical_interview = '';
-  mr_interview = '';
-  hr_interview = '';
+  number_recruits = "5";
+  cse = "Y";
+  ece = "Y";
+  mech = "Y";
+  civil = "Y";
+  chem = "Y";
+  mme = "Y";
+  resume_shortlist = "Y";
+  online_test = "Y";
+  aptitude_test = 'Y';
+  technical_test = 'Y';
+  group_discussion = 'Y';
+  technical_interview = 'Y';
+  mr_interview = 'Y';
+  hr_interview = 'Y';
   other_details = '';
   third_party_details = '';
   data = {};
 
-  constructor(private router:Router, private http: HttpClient) { }
+  constructor(private router:Router, private http: HttpClient, private allpurpose: AllPurposeService) {
+
+   }
 
   ngOnInit(): void {
   }
@@ -95,10 +98,16 @@ export class CreateApplicationComponent implements OnInit {
     },(err)=>{
       console.log(err);
     },()=>{
+      this.http.post("http://localhost:8000/notify_post",{"logo": this.logo_url, "company_name": this.company_name, "tag_line" : "Apply Frist here"}).subscribe((res)=>{
+          console.log(res);
+        },(err)=>{
+          console.log(err);
+        },()=>{
+        alert("Notification Created!!!");
+      })
+      this.router.navigate(['/admindb/application-view']);
       alert("Notice Created!!!");
     })
-
-    this.router.navigate(['/admindb/application-view']);
   }
 
 }

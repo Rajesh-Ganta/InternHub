@@ -35,52 +35,52 @@
           class="data-of-not"
           style="text-align: right; margin-right: 10px"
         >
-          Date : <strong>12-01-2021</strong>
+          Date : <strong>{{data.create_date}}</strong>
         </div>
         <div class="row m-1 p-1">
           <div class="col">
-            <span class="title h5">Name of the Company :</span> Sails
-            Software Solutions
+            <span class="title h5">Name of the Company :</span>
+            {{data.company_name }}
           </div>
           <div class="col">
-            <span class="title h5">Sector of Industry :</span> IT
+            <span class="title h5">Sector of Industry :</span> {{data.company_sector }}
           </div>
         </div>
 
         <div class="row m-1 p-1">
           <div class="col">
             <span class="title h5">Website/URL for Company :</span>
-            sailssoftwaresolutions.com
+            {{ data.company_website }}
           </div>
           <div class="col">
             <span class="title h5">Location of Company :</span>
-            Visakhapatnam
+            {{ data.address }}
           </div>
         </div>
 
         <div class="row m-1 p-1">
           <div class="col">
             <span class="title h5">Preferred Date of Visit :</span>
-            13/11/2021
+            {{ data.visit_date }}
           </div>
           <div class="col">
-            <span class="title h5">Registration :</span> Online
+            <span class="title h5">Registration :</span> {{data.registration_type}}
           </div>
         </div>
 
         <div class="row m-1 p-1">
           <div class="col">
             <span class="title h5">Point of Contact & Designation :</span>
-            Madhuri.M , HR Executive
+            {{data.poc}}
           </div>
           <div class="col">
             <span class="title h5">Mobile No& Email ID :</span>
-            7981939399,madhuri.mudidana@sailssoftware.com
+            {{data.poc_email_phone}}
           </div>
         </div>
 
         <div class="check-not m-2">
-          <table class="table table-bordered">
+          <table class="table table-bordered text-center">
             <tr>
               <th rowspan="2">Type of RecuirtMent ( Y / N )</th>
               <th>Only Internship</th>
@@ -88,9 +88,10 @@
               <th>Only Placements</th>
             </tr>
             <tr>
-              <td>-</td>
-              <td>Y</td>
-              <td>-</td>
+              <td><div *ngIf=" data.recruitment_type === 'Internship'; else No">Y</div></td>
+              <td><div *ngIf=" data.recruitment_type === 'Internship with Job'; else No">Y</div></td>
+              <td><div *ngIf=" data.recruitment_type === 'Only Job'; else No">Y</div></td>
+              <ng-template #No>N</ng-template>
             </tr>
             <tr></tr>
           </table>
@@ -99,36 +100,35 @@
         <div class="row m-1 p-1">
           <div class="col">
             <span class="title h5">Job Designation :</span>
-            <span class="text-primary">Associate Software Engineer</span>
+            <span class="text-primary"> {{data.job_role}} </span>
           </div>
           <div class="col">
             <span class="title h5">Place of Posting : </span>
-            <span class="text-primary">Visakhapatnam,Work from Office</span>
+            <span class="text-primary">{{data.posting_place}}</span>
           </div>
         </div>
 
         <div class="d-block description mx-3 p-1">
           <span class="h5">Job Description :</span>
-          <span class="text-primary">Developing Web Applications</span>
+          <span class="text-primary">{{data.job_description}}</span>
         </div>
         <div class="d-block description mx-3 p-1">
           <span class="h5"> Package Details : </span>
-          <span class="text-primary">4-5LPA</span>
+          <span class="text-primary">{{data.package_details}}</span>
         </div>
         <div class="d-block description mx-3 p-1">
           <span class="h5"> Eligibility Criteria : </span>
-          <span class="text-primary"
-            >Class X,XII,B.Tech- CGPA/Percentage- Above 70,All candidates
-            from CSE & IT,Year of Passing:2021-2022
+          <span class="text-primary">
+            {{data.eligibility_criteria}}
           </span>
         </div>
         <div class="d-block description mx-3 p-1">
           <span class="h5"> Monthly Stipend : </span>
-          <span class="text-primary"></span>
+          <span class="text-primary"> {{data.stiphend}} </span>
         </div>
         <div class="d-block description mx-3 p-1">
           <span class="h5">Training/Internship duration/PPO :</span>
-          <span class="text-primary"></span>
+          <span class="text-primary">{{data.job_duration}}</span>
         </div>
 
         <div class="d-block description mx-3 p-1">
@@ -144,13 +144,14 @@
                     <th>Metallurgical & Materials</th>
                 </tr>
                 <tr>
-                    <td>Y / N</td>
-                    <td>N</td>
-                    <td>N</td>
-                    <td>N</td>
-                    <td>Y</td>
-                    <td>Y</td>
-                    <td>N</td>
+                    <td></td>
+                    <td><div *ngIf=" data.chem === 'Y'; else No">Y</div></td>
+                    <td><div *ngIf=" data.civil === 'Y'; else No">Y</div></td>
+                    <td><div *ngIf=" data.cse === 'Y'; else No">Y</div></td>
+                    <td><div *ngIf=" data.ece === 'Y'; else No">Y</div></td>
+                    <td><div *ngIf=" data.mech === 'Y'; else No">Y</div></td>
+                    <td><div *ngIf=" data.mme === 'Y'; else No">Y</div></td>
+
                 </tr>
             </table>
         </div>
@@ -160,36 +161,36 @@
             <table class="table table-bordered text-center">
                 <tr>
                     <th colspan="3">Resume based shortlisting (Y/N)</th>
-                    <th>Y</th>
+                    <th><div *ngIf=" data.resume_shortlist === 'Y'; else No">Y</div></th>
                 </tr>
                 <tr>
                     <th>Online Test / Pen-Paper Test</th>
-                    <td>N</td>
+                    <td><div *ngIf=" data.online_test=== 'Y'; else No">Y</div></td>
                     <th>Aptitude Test (Y/N)</th>
-                    <td>N</td>
+                    <td><div *ngIf=" data.aptitude_test === 'Y'; else No">Y</div></td>
                 </tr>
                 <tr>
                     <th>Technical Test (Y/N)</th>
-                    <td>N</td>
+                    <td><div *ngIf=" data.technical_test === 'Y'; else No">Y</div></td>
                     <th>Group Discussion (Y/N)</th>
-                    <td>N</td>
+                    <td><div *ngIf=" data.group_discussion === 'Y'; else No">Y</div></td>
                 </tr>
                 <tr>
                     <th colspan="2">Personal Interview</th>
                     <td colspan="2">
-                        Technical - Y<br>
-                        HR - N
+                        Technical - {{data.technical_interview}}<br>
+                        HR - {{data.hr_interview}}
                     </td>
                 </tr>
                 <tr>
                     <th colspan="3">Details of other rounds (if any)</th>
-                    <td></td>
+                    <td>{{data.other_details}}</td>
                 </tr>
                 <tr>
                     <th>Expected no. of recruits</th>
-                    <td></td>
+                    <td>{{data.number_recruits}}</td>
                     <th>Third Party Details (if any)</th>
-                    <td></td>
+                    <td>{{data.third_party_details}}</td>
                 </tr>
             </table>
         </div>

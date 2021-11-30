@@ -12,6 +12,9 @@ export class AllPurposeService {
     }
   }
 
+
+  post : any;
+
   //for getting type of the users we use this JSON API
   usersUrl : string = "http://localhost:8000/";
 
@@ -59,5 +62,7 @@ export class AllPurposeService {
   decrypt(msg:any){
     return cryptoJS.AES.decrypt(msg,this.key).toString(cryptoJS.enc.Utf8);
   }
+
+
 
 }

@@ -7,16 +7,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def fetch_data():
-	conn = sql.connect("internhub.db")
-	data = {}
-	cur = conn.cursor()
-	cur.execute("SELECT * FROM USERS")
-	rows = cur.fetchall()
-	for row in rows:
-		data[row[0]] = {"fname":row[1],"email":row[2],"user_type":row[3]}
-	conn.close()
-	return data
+from datetime import date
 
 from fastapi import FastAPI,Request
 
@@ -33,6 +24,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+def fetch_data():
+	conn = sql.connect("internhub.db")
+	data = {}
+	cur = conn.cursor()
+	cur.execute("SELECT * FROM USERS")
+	rows = cur.fetchall()
+	for row in rows:
+		data[row[0]] = {"fname":row[1],"email":row[2],"user_type":row[3]}
+	conn.close()
+	return data
 
 @app.get('/')
 def get_userdata():
@@ -64,16 +65,22 @@ def fetch_note_data():
     con.close()
     return data
 
-
-
-#print(fetch_data())
+@app.get('/notify')
+def get_notification():
+	return fetch_note_data()
 
 def insert_note_data(data):
     con= sql.connect("internhub.db")
-    sql = "INSERT INTO NOTIFICATION(notification_id,logo, company_name, tag_line,isDelete,isViewed) VALUES(?,?,?,?,?,?)"
-    con.execute(sql,(len(fetch_note_data())+1,data["logo"],data["company_name"],data["tag_line"],"0","0"))
+    query = "INSERT INTO NOTIFICATION( logo, company_name, tag_line,isDelete,isViewed) VALUES(?,?,?,?,?)"
+    con.execute(query,(data["logo"],data["company_name"],data["tag_line"],"0","0"))
     con.commit()
     con.close()
+
+@app.post('/notify_post')
+async def user_data(req:Request):
+    data = await req.json()
+    insert_note_data(data)
+    return data
 
 def delete_note_data(id):
     con=sql.connect("internhub.db")
@@ -82,25 +89,19 @@ def delete_note_data(id):
     con.commit()
     con.close()
 
+@app.post('/delete_not')
+async def del_not(req:Request):
+    data = await req.json()
+    print(data)
+    delete_note_data(data["id"])
+    return data
+
 def view_note_data(id):
     con=sql.connect("internhub.db")
-    sql="UPDATE NOTIFICATION SET isViewed = ? WHERE notification_id = ?"
-    con.execute(sql,("1",id))
+    query="UPDATE NOTIFICATION SET isViewed = ? WHERE notification_id = ?"
+    con.execute(query,("1",id))
     con.commit()
     con.close()
-
-# old fetch notices
-# def fetch_notices():
-#   conn = sql.connect("internhub.db")
-#   data = []
-#   cur  = conn.cursor()
-#   query = "SELECT * FROM NOTICES"
-#   cur.execute(query)
-#   rows = cur.fetchall()
-#   for row in rows:
-#     data.append({"notice_id": row[0], "company_name":row[1], "role":row[2], "offer_type":row[3],"package":row[4], "visit_date":row[5], "logo_url" : row[6]})
-#   conn.close()
-#   return data
 
 def fetch_notices():
   conn = sql.connect("internhub.db")
@@ -146,23 +147,27 @@ def fetch_notices():
                   "mr_interview" : row[32],
                   "hr_interview" : row[33],
                   "other_details" : row[34],
-                  "third_party_details" : row[35]
+                  "third_party_details" : row[35],
+                  "create_date": row[36]
                 })
   conn.close()
   return data
 
+@app.get('/get_notices')
+def get_notices():
+	return fetch_notices()
 
-def delete_notice(notice_id: str):
+def delete_notice(notice_id):
   conn = sql.connect("internhub.db")
   query = "DELETE FROM JOB_NOTICES WHERE notice_id = ?"
-  if conn.execute(query, (notice_id)):
-    conn.commit()
-    conn.close()
-    return True
-  else:
-    conn.close()
-    return False
+  conn.execute(query, (notice_id))
+  conn.commit()
+  return True
 
+@app.post('/del_notice')
+async def del_notices(req: Request):
+  data = await req.json()
+  return delete_notice(str(data["notice_id"]))
 
 def insert_notice(data):
   conn = sql.connect("internhub.db")
@@ -174,9 +179,9 @@ def insert_notice(data):
               stiphend ,job_role ,recruitment_type ,number_recruits ,cse ,
               ece ,mech ,civil ,chem ,mme ,
               resume_shortlist ,online_test ,aptitude_test ,technical_test ,group_discussion ,
-              technical_interview ,mr_interview ,hr_interview ,other_details ,third_party_details
+              technical_interview ,mr_interview ,hr_interview ,other_details ,third_party_details,'create_date'
               )
-              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+              VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
               '''
   conn.execute(query,(data["company_name"], data["company_sector"], data["company_website"], data["visit_date"], data["logo_url"],
                       data["address"], data["registration_type"], data["poc"], data["poc_email_phone"], data["job_description"],
@@ -184,13 +189,19 @@ def insert_notice(data):
                       data["stiphend"], data["job_role"], data["recruitment_type"], data["number_recruits"],data["cse"],
                       data["ece"], data["mech"], data["civil"], data["chem"], data["mme"],
                       data["resume_shortlist"], data["online_test"], data["aptitude_test"], data["technical_test"], data["group_discussion"],
-                      data["technical_interview"], data["mr_interview"], data["hr_interview"], data["other_details"], data["third_party_details"],
+                      data["technical_interview"], data["mr_interview"], data["hr_interview"], data["other_details"], data["third_party_details"], date.today()
                       )
               )
   conn.commit()
+  conn.close()
+  #insert_note_data({"company_name": data["company_name"], "logo" :data["logo_url"], "tag_line": "Be the Frist to apply to " + data["company_name"]})
 
+@app.post('/create_notice')
+async def create_notice(req: Request):
+  data = await req.json()
+  return insert_notice(data)
 
-def send_mails(receiver: str):
+def send_mails(receiver: str, data):
   smtp_server = "smtp.gmail.com"
   sender_email = "test.internhub@gmail.com"  # Enter your address
   password = "internhub@123"
@@ -256,48 +267,115 @@ def send_mails(receiver: str):
       server.sendmail(sender_email, receiver_email, text)
       print("Sent successfully")
 
-@app.get('/notify')
-def get_notification():
-	return fetch_note_data()
-
-@app.post('/notify_post')
-async def user_data(req:Request):
-    data = await req.json()
-    insert_note_data(data)
-    return data
-
-@app.post('/delete_not')
-async def del_not(req:Request):
-    data = await req.json()
-    print(data)
-    delete_note_data(data["id"])
-    return data
-
-@app.get('/get_notices')
-def get_notices():
-	return fetch_notices()
-
-@app.post('/del_notice')
-async def del_notice(req: Request):
-  data = await req.json()
-  return delete_notice(str(data["notice_id"]))
-
 @app.post('/mail')
 async def mail(req: Request):
   data = await req.json()
   return send_mails(data["mail"])
 
-@app.post('/create_notice')
-async def create_notice(req: Request):
-  data = await req.json()
-  return insert_notice(data)
+# create student profile
+def create_profile(data):
+    print("Create Student Called")
+    con = sql.connect("Internhub.db")
+    query = '''INSERT INTO PersonalData(first_name,
+               last_name,email,dob,address1,address2,
+               city,state,pincode)
+               VALUES (?,?,?,?,?,?,?,?,?)'''
+    con.execute(query,(
+                data["fname"],
+                data["lname"],data["email"],data["dob"],
+                data["address1"],data["address1"],
+                data["city"], data["state"], data["pin"]
+    ))
+    con.commit()
+    print(data["fname"])
 
+    query = '''INSERT INTO EducationalData(
+              collegename,
+               rollnumber,
+               branch,
+               clgjoining,
+                clgcompletion,
+                e1s1 ,
+                e1s2 ,
+                e2s1 ,
+                e2s2 ,
+                e3s1 ,
+                e3s2 ,
+                e4s1 ,
+                e4s2 ,
+                enggcgpa ,
+                pucbranch,
+                pucjoiningdate,
+                puccompletiondate ,
+                p1cgpa ,
+                p2cgpa ,
+                puccgpa ,
+                sscboard ,
+                ssccompletiondate ,
+                ssccgpa ,
+                skills ,
+                resume )
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+    con.execute(query,(
+                data["clg_name"],data["roll_number"],data["enggbranch"],data["enggdatejoin"],data["enggdatecomplete"],data["engge1s1"],data["engge1s2"],
+                data["engge2s1"],data["engge2s2"],data["engge3s1"],data["engge3s2"],data["engge4s1"],data["engge4s2"],data["enggcgpa"],data["pucbranch"],
+                data["pucdatejoin"],data["pucdatecomplete"],data["puc1"],data["puc2"],
+                data["puccgpa"],data["xboard"],
+                data["xdate"], data["xcgpa"], data["skills"],data["path"]
+    ))
+    con.commit()
+    con.close()
+    return data["roll_number"]
+
+@app.post('/create_student')
+async def create_student(req: Request):
+    data = await req.json()
+    return create_profile(data)
+
+def fetch_profile_data():
+    con = sql.connect("internhub.db")
+    data = []
+    cur = con.cursor()
+    cur.execute("SELECT * FROM PersonalData")
+    rows = cur.fetchall()
+    for row in rows:
+        data.append({
+            "sid":row[0],
+            "firstname":row[1],
+            "lastname":row[2],
+            "email":row[3],
+            "dob":row[4],
+            "address1":row[5],
+            "address2":row[6],
+            "city":row[7],
+            "state":row[8],
+            "pincode":row[9]
+        })
+    con.close()
+    return data
+
+@app.get('/profile_data')
+def view():
+    return fetch_data()
 
 #insert
 #http requests
 # post , get
 # response print
 
+
+# old fetch notices
+# def fetch_notices():
+#   conn = sql.connect("internhub.db")
+#   data = []
+#   cur  = conn.cursor()
+#   query = "SELECT * FROM NOTICES"
+#   cur.execute(query)
+#   rows = cur.fetchall()
+#   for row in rows:
+#     data.append({"notice_id": row[0], "company_name":row[1], "role":row[2], "offer_type":row[3],"package":row[4], "visit_date":row[5], "logo_url" : row[6]})
+#   conn.close()
+#   return data
 
 
 # Creating table
@@ -353,7 +431,8 @@ async def create_notice(req: Request):
 #             mr_interview CHAR(255),
 #             hr_interview CHAR(255),
 #             other_details CHAR(255),
-#             third_party_details CHAR(255)
+#             third_party_details CHAR(255),
+#              create_date CHAR(255)
 #         )"""
 # conn.execute(query)
 # conn.commit()
@@ -419,3 +498,53 @@ async def create_notice(req: Request):
 # rows = cur.fetchall()
 # for row in rows:
 #     print(row)
+
+
+# _profile tables creation
+
+# query1 ='''CREATE TABLE PersonalData(
+#    sid INTEGER PRIMARY KEY AUTOINCREMENT,
+#    first_name TEXT NOT NULL,
+#    last_name TEXT NOT NULL,
+#    email CHAR(255),
+#    dob TEXT,
+#    address1 TEXT,
+#    address2 TEXT,
+#    city CHAR(255),
+#    state CHAR(255),
+#    pincode CHAR(255)
+# )'''
+# query2 = '''CREATE TABLE EducationalData(
+#     eid INTEGER PRIMARY KEY AUTOINCREMENT,
+#     collegename CHAR(255),
+#     rollnumber CHAR(10),
+#     branch CHAR(255),
+#     clgjoining TEXT,
+#     clgcompletion TEXT,
+#     e1s1 REAL,
+#     e1s2 REAL,
+#     e2s1 REAL,
+#     e2s2 REAL,
+#     e3s1 REAL,
+#     e3s2 REAL,
+#     e4s1 REAL,
+#     e4s2 REAL,
+#     enggcgpa REAL,
+#     pucbranch CHAR(100),
+#     pucjoiningdate TEXT,
+#     puccompletiondate TEXT,
+#     p1cgpa REAL,
+#     p2cgpa REAL,
+#     puccgpa REAL,
+#     sscboard TEXT,
+#     ssccompletiondate TEXT,
+#     ssccgpa REAL,
+#     skills TEXT,
+#     resume TEXT
+# )'''
+
+
+# con = sql.connect("internhub.db")
+# con.execute(query1)
+# con.execute(query2)
+# con.close()

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
+import { AllPurposeService } from 'src/app/allpurposervice.service';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -11,7 +14,7 @@ export class PostcardComponent implements OnInit {
 
   notices:any = [];
 
-  constructor(private http:HttpClient) {
+  constructor(private http:HttpClient, private allpurpose: AllPurposeService, private route: Router) {
   }
 
   ngOnInit(): void {
@@ -35,9 +38,10 @@ export class PostcardComponent implements OnInit {
         })
   }
 
-  view_notice(i: any)
+  view_notice(data: any)
   {
-    console.log(i);
+    this.allpurpose.post = data;
+    this.route.navigate(['/admindb/application-view']);
   }
 
   delete_notice(notice_id: any){
