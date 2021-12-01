@@ -98,15 +98,16 @@ export class CreateApplicationComponent implements OnInit {
     },(err)=>{
       console.log(err);
     },()=>{
-      this.http.post("http://localhost:8000/notify_post",{"logo": this.logo_url, "company_name": this.company_name, "tag_line" : "Apply Frist here"}).subscribe((res)=>{
+      this.http.post("http://localhost:8000/notify_post",{"logo": this.logo_url, "company_name": this.company_name, "tag_line" : "Apply for oppurtunity at " + this.company_name }).subscribe((res)=>{
           console.log(res);
         },(err)=>{
           console.log(err);
         },()=>{
         alert("Notification Created!!!");
       })
+      this.allpurpose.post = this.data;
       this.router.navigate(['/admindb/application-view']);
-      alert("Notice Created!!!");
+      alert("Notice Posted and Alert Mails are sent to all students!");
     })
   }
 
