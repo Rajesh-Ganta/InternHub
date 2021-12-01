@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AllPurposeService } from 'src/app/allpurposervice.service';
@@ -10,14 +11,17 @@ import { AllPurposeService } from 'src/app/allpurposervice.service';
 export class ApplicationPreviewComponent implements OnInit {
 
   data :any;
-  constructor(private allpurpose: AllPurposeService, private http: HttpClient) { }
+  constructor(private allpurpose: AllPurposeService, private http: HttpClient,private router:Router) { }
 
   user_data : any;
 
   ngOnInit(): void {
     this.data = this.allpurpose.post;
+    if(!this.data){
+      let x:any = JSON.parse(localStorage.getItem('loginData')??'');
+      this.router.navigateByUrl(`${x.type}/dash`);
+    }
     //console.log(this.data);
-    let x:any = JSON.parse(localStorage.getItem('loginData')??'');
   }
 
   post = this.allpurpose.post;
@@ -29,6 +33,7 @@ export class ApplicationPreviewComponent implements OnInit {
     let user_data = JSON.parse(localStorage.getItem('loginData')??'');
     let email = user_data.name
     let sid = user_data.name.split('@')[0]
+    let role = user_data.type;
 
     if(this.eligible == true)
     {
@@ -38,6 +43,7 @@ export class ApplicationPreviewComponent implements OnInit {
         console.log(err);
       },()=>{
         alert("Application Submited");
+        this.router.navigateByUrl(`/${role}/dash`);
       })
 
     }
