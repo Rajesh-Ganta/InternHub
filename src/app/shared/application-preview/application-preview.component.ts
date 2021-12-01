@@ -18,7 +18,6 @@ export class ApplicationPreviewComponent implements OnInit {
     this.data = this.allpurpose.post;
     console.log(this.data);
     let x:any = JSON.parse(localStorage.getItem('loginData')??'');
-    console.log(x);
   }
 
   post = this.allpurpose.post;
@@ -29,7 +28,7 @@ export class ApplicationPreviewComponent implements OnInit {
   {
     if(this.eligible == true)
     {
-      this.http.post("http://localhost:8000/insert_application",{"student_id": "S160215", "name": 'XXX', "email" : "12345", "phone": "123434", "company_name": "xxx", "notice_id": "11"}).subscribe((res)=>{
+      this.http.post("http://localhost:8000/insert_application",{"student_id": "S160215", "name": 'XXX', "email" : "12345", "phone": "123434", "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
         console.log(res);
       },(err)=>{
         console.log(err);

@@ -214,3 +214,25 @@
       </div>
     </div>
   </div>
+  <hr>
+  <div class="card m-2 shadow-sm bordered">
+    <h4>Eligibility Criteria:</h4>
+      <ul style = "list-style-type: square;">
+          <li>Eligibility Criteria of Company are Satisfied</li>
+          <li>Not selected in other on Campus Drives or Black Listed</li>
+          <li>Willing to Join the Company(If selected Withdraw from Offer invities displinary actions)</li>
+      </ul>
+      <div class="form-check">
+        <input
+          class="form-check-input m-2"
+          type="checkbox"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          [(ngModel)]= "eligible"
+        />
+        <label class="form-check-label" for="flexRadioDefault2"> I confirm my self as eligible for this opportunity </label>
+      </div>
+      <div class="col " style="margin-left: 80px!important;" >
+        <button class="btn btn-info m-2" (click)="apply()" >Apply</button>
+      </div>
+  </div>

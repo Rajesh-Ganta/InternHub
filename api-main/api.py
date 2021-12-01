@@ -7,7 +7,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+import datetime
 from datetime import date
 
 from fastapi import FastAPI,Request
@@ -160,15 +160,15 @@ def get_notices():
 
 def delete_notice(notice_id):
   conn = sql.connect("internhub.db")
-  query = "DELETE FROM JOB_NOTICES WHERE notice_id = ?"
-  conn.execute(query, (notice_id))
+  query = "DELETE FROM JOB_NOTICES WHERE notice_id = " + str(notice_id)
+  conn.execute(query)
   conn.commit()
-  return True
 
 @app.post('/del_notice')
 async def del_notices(req: Request):
   data = await req.json()
-  return delete_notice(str(data["notice_id"]))
+  print(data)
+  return delete_notice(data["notice_id"])
 
 def insert_notice(data):
   conn = sql.connect("internhub.db")
@@ -360,7 +360,8 @@ def fetch_profile_data():
 def view():
     return fetch_data()
 
-def insert_application(data):
+def insert_applications(data):
+  print("insert called")
   con = sql.connect("internhub.db")
   query = '''INSERT INTO APPLICATIONS(
            student_id ,
@@ -370,16 +371,35 @@ def insert_application(data):
            company_name,
            applied_time,
            notice_id
-           ) VALUES( ?, ?, ?, ?, ?, ?)'''
-  con.execute(query, (data["student_id"], data["name"], data["email"], data["phone"], data["company_name"], "12:00" ,data["notice_id"]))
+           ) VALUES( ?, ?, ?, ?, ?, ?, ?)'''
+  con.execute(query, (data["student_id"], data["name"], data["email"], data["phone"], data["company_name"], datetime.datetime.now(),data["notice_id"]))
   con.commit()
   con.close()
+  return True
 
 @app.post('/insert_application')
 async def insert_application(req: Request):
     data = await req.json()
-    insert_application(data)
+    return insert_applications(data)
 
+
+#fetching data
+def fetch_applications():
+    con = sql.connect("internhub.db")
+    data = []
+    cur = con.cursor()
+    cur.execute("SELECT * FROM APPLICATIONS")
+    rows = cur.fetchall()
+    for row in rows:
+    	data.append({"application_id":row[0],"student_id":row[1],"name":row[2],"email":row[3],"phone":row[4],"company_name":row[5], "applied_time" : row[6], "notice_id": row[7]})
+    con.close()
+    return data
+
+#CREATE TABLE "APPLICATIONS" ( "application_id" INTEGER, "student_id" VARCHAR(255), "name" VARCHAR(255), "email" VARCHAR(255), "phone" VARCHAR(255), "company_name" VARCHAR(255), "applied_time" VARCHAR(255), "notice_id" VARCHAR(255), PRIMARY KEY("application_id" AUTOINCREMENT) )
+
+@app.get('/fetch_application')
+def fetch_application():
+  return fetch_applications()
 
 #insert
 #http requests
