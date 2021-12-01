@@ -1,3 +1,4 @@
+from os import name
 import sqlite3 as sql
 
 import email, smtplib, ssl
@@ -6,7 +7,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+import datetime
 from datetime import date
 
 from fastapi import FastAPI,Request
@@ -159,15 +160,15 @@ def get_notices():
 
 def delete_notice(notice_id):
   conn = sql.connect("internhub.db")
-  query = "DELETE FROM JOB_NOTICES WHERE notice_id = ?"
-  conn.execute(query, (notice_id))
+  query = "DELETE FROM JOB_NOTICES WHERE notice_id = " + str(notice_id)
+  conn.execute(query)
   conn.commit()
-  return True
 
 @app.post('/del_notice')
 async def del_notices(req: Request):
   data = await req.json()
-  return delete_notice(str(data["notice_id"]))
+  print(data)
+  return delete_notice(data["notice_id"])
 
 def insert_notice(data):
   conn = sql.connect("internhub.db")
@@ -194,6 +195,7 @@ def insert_notice(data):
               )
   conn.commit()
   conn.close()
+  send_mails()
   #insert_note_data({"company_name": data["company_name"], "logo" :data["logo_url"], "tag_line": "Be the Frist to apply to " + data["company_name"]})
 
 @app.post('/create_notice')
@@ -201,28 +203,28 @@ async def create_notice(req: Request):
   data = await req.json()
   return insert_notice(data)
 
-def send_mails(receiver: str, data):
+def send_mails(receiver = "S160215@rguktsklm.ac.in"):
   smtp_server = "smtp.gmail.com"
   sender_email = "test.internhub@gmail.com"  # Enter your address
   password = "internhub@123"
 
   receiver_email = receiver  # Enter receiver address
-  subject = "Check out the new notice!"
+  subject = "Check out the new notice about Internship!"
   # body_plain = "This is an email with attachment sent from Python"
 
   body_html = '''
   <html>
     <body>
-      <p>Hi,<br>
-        There is Notice posted in the InternHub.
-        Visit the website and submit your response
-        <a href="http://www.internhub.com">click here</a>
-      </p>
-      <h3>- Team InternHub</h3>
+      <h3>Dear Students,</h3>
+        There is a Notice posted in Placement Portal InternHub.<br>
+        About an Intern or Job Oppurtunity <br>
+        Visit the website and go through the details of offer<br>
+        Note: Complete your registration process as early as possible <a href="http://localhost:4200/admindb/posts" target="blank">click here</a>
+      <h4>- Thanks and Regards</h4>
+      Team Intern Hub
     </body>
   </html>
   '''
-
   # Create a multipart message and set headers
   message = MIMEMultipart()
   message["From"] = sender_email
@@ -356,6 +358,47 @@ def fetch_profile_data():
 @app.get('/profile_data')
 def view():
     return fetch_data()
+
+def insert_applications(data):
+  print("insert called")
+  con = sql.connect("internhub.db")
+  query = '''INSERT INTO APPLICATIONS(
+           student_id ,
+           name ,
+           email ,
+           phone ,
+           company_name,
+           applied_time,
+           notice_id
+           ) VALUES( ?, ?, ?, ?, ?, ?, ?)'''
+  con.execute(query, (data["student_id"], data["name"], data["email"], data["phone"], data["company_name"], datetime.datetime.now(),data["notice_id"]))
+  con.commit()
+  con.close()
+  return True
+
+@app.post('/insert_application')
+async def insert_application(req: Request):
+    data = await req.json()
+    return insert_applications(data)
+
+
+#fetching data
+def fetch_applications():
+    con = sql.connect("internhub.db")
+    data = []
+    cur = con.cursor()
+    cur.execute("SELECT * FROM APPLICATIONS")
+    rows = cur.fetchall()
+    for row in rows:
+    	data.append({"application_id":row[0],"student_id":row[1],"name":row[2],"email":row[3],"phone":row[4],"company_name":row[5], "applied_time" : row[6], "notice_id": row[7]})
+    con.close()
+    return data
+
+#CREATE TABLE "APPLICATIONS" ( "application_id" INTEGER, "student_id" VARCHAR(255), "name" VARCHAR(255), "email" VARCHAR(255), "phone" VARCHAR(255), "company_name" VARCHAR(255), "applied_time" VARCHAR(255), "notice_id" VARCHAR(255), PRIMARY KEY("application_id" AUTOINCREMENT) )
+
+@app.get('/fetch_application')
+def fetch_application():
+  return fetch_applications()
 
 #insert
 #http requests
@@ -546,4 +589,37 @@ def view():
 # con = sql.connect("internhub.db")
 # con.execute(query1)
 # con.execute(query2)
+# con.close()
+
+
+# applications table
+# query = '''CREATE TABLE APPLICATIONS(
+#    application_id INTEGER PRIMARY KEY AUTOINCREMENT,
+#    student_id VARCHAR(255),
+#    name VARCHAR(255),
+#    email VARCHAR(255),
+#    phone VARCHAR(255),
+#    company_name VARCHAR(255),
+#    applied_time VARCHAR(255),
+#    notice_id VARCHAR(255)
+# )'''
+
+# con = sql.connect("internhub.db")
+# con.execute(query)
+# con.close()
+
+
+# insert application query
+# query = '''INSERT INTO APPLICATIONS(
+#            student_id ,
+#            name ,
+#            email ,
+#            phone ,
+#            company_name,
+#            notice_id
+#            ) VALUES( ?, ?, ?, ?, ?, ?)'''
+
+# con = sql.connect("internhub.db")
+# con.execute(query, ("S160215", "G.Rajesh", "rajeshganta123456@gmail.com", "9492733997", "TCS", "1" ))
+# con.commit()
 # con.close()

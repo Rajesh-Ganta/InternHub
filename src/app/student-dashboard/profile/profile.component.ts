@@ -65,9 +65,9 @@ export class ProfileComponent implements OnInit {
   constructor(private router:Router,private http:HttpClient) {}
 
   ngOnInit(): void {
-    //  let x:any = JSON.parse(localStorage.getItem('loginData')??'');
-    //  this.currentUser = x.type;
-    //  console.log(this.currentUser);
+      let x:any = JSON.parse(localStorage.getItem('loginData')??'');
+      this.currentUser = x.type;
+      console.log(this.currentUser);
   }
 
   nextStep() {

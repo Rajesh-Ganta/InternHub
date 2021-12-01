@@ -36,6 +36,7 @@ import {
 } from '@angular/fire/functions';
 import { ApplicationPreviewComponent } from './shared/application-preview/application-preview.component';
 import { CreateApplicationComponent } from './admin-dashboard/create-application/create-application.component';
+import { ViewApplicationsComponent } from './admin-dashboard/view-applications/view-applications.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { CreateApplicationComponent } from './admin-dashboard/create-application
     NotItemComponent,
     ApplicationPreviewComponent,
     CreateApplicationComponent,
+    ViewApplicationsComponent,
   ],
   imports: [
     RouterModule,
