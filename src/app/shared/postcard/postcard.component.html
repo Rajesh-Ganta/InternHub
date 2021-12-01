@@ -24,9 +24,9 @@
             <td> {{ notice.package_details }} </td>
             <td> {{ notice.visit_date }} </td>
             <td>
-              <button class="btn btn-primary mx-1" (click)="view_notice(notice)"><i class="fa fa-eye" style="font-size:15px"></i></button>
-              <button class="btn btn-primary mx-1" ><i class="fa fa-edit" style="font-size:15px"></i></button>
-              <button class="btn btn-danger mx-1" (click)="delete_notice(notice.notice_id)"><i class="fa fa-trash" style="font-size:15px"></i></button>
+              <button class="btn btn-primary mx-1" (click)="view_notice(notice)"><i class="fa fa-eye" style="font-size:15px"></i>{{role=='admindb'?'':' View'}}</button>
+              <button class="btn btn-primary mx-1" *ngIf="role=='admindb'"><i class="fa fa-edit" style="font-size:15px"></i></button>
+              <button class="btn btn-danger mx-1" *ngIf="role=='admindb'" (click)="delete_notice(notice.notice_id)"><i class="fa fa-trash" style="font-size:15px"></i></button>
             </td>
           </tr>
         </tbody>

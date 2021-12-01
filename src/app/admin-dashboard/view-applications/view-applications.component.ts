@@ -30,7 +30,6 @@ export class ViewApplicationsComponent implements OnInit {
         },
         (error) => {                              //Error callback
           console.error('Request failed with error')
-          alert(error);
         },
         () => {                                   //Complete callback
           console.log('Request completed')

@@ -50,6 +50,10 @@ const routes: Routes = [
         component:HallofameComponent
       },
       {
+        path:'application-view',
+        component:ApplicationPreviewComponent
+      },
+      {
         path:'**',
         redirectTo:'dash'
       }

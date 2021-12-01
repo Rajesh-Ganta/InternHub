@@ -13,12 +13,15 @@ import { Router } from '@angular/router';
 export class PostcardComponent implements OnInit {
 
   notices:any = [];
+  role : any = '';
+
 
   constructor(private http:HttpClient, private allpurpose: AllPurposeService, private route: Router) {
   }
 
   ngOnInit(): void {
     this.get_notices();
+    this.role = JSON.parse(localStorage.getItem('loginData')??'').type;
   }
 
   public get_notices()
@@ -31,7 +34,6 @@ export class PostcardComponent implements OnInit {
         },
         (error) => {                              //Error callback
           console.error('Request failed with error')
-          alert(error);
         },
         () => {                                   //Complete callback
           console.log('Request completed')
@@ -40,8 +42,9 @@ export class PostcardComponent implements OnInit {
 
   view_notice(data: any)
   {
+    console.log(this.role);
     this.allpurpose.post = data;
-    this.route.navigate(['/admindb/application-view']);
+    this.route.navigateByUrl(`/${this.role}/application-view`) ;
   }
 
   delete_notice(notice_id: any){
