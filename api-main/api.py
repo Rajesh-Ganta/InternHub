@@ -287,7 +287,6 @@ def create_profile(data):
                 data["city"], data["state"], data["pin"]
     ))
     con.commit()
-    print(data["fname"])
 
     query = '''INSERT INTO EducationalData(
               collegename,

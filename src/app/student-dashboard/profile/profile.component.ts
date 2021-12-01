@@ -57,6 +57,9 @@ export class ProfileComponent implements OnInit {
   currentUser : string = '';
   data = {}
 
+  header : any = new HttpHeaders()
+   .set('content-type','application/json')
+   .set('Access-Control-Allow-Origin', '*');
 
 
   constructor(private router:Router,private http:HttpClient) {}
@@ -113,6 +116,7 @@ export class ProfileComponent implements OnInit {
   }
   updateData() {
     // console.log("Update Called");
+    let role = JSON.parse(localStorage.getItem('loginData')??'').type.toString();
     this.data = {
       "fname":this.fname,"lname":this.lname,"email":this.email,"dob":this.dob,"address1":this.address1,"address2":this.address2,
       "city":this.city,"state":this.state,"pin":this.pin,"clg_name":this.clg_name,"roll_number":this.roll_number,"enggbranch":this.enggbranch,
@@ -123,13 +127,17 @@ export class ProfileComponent implements OnInit {
       "path":this.pathOfFile
     };
     console.log(this.data)
-    this.http.post("http://localhost:8000/create_student",this.data).subscribe((res)=>{
+    this.http.post("http://localhost:8000/create_student",{headers:this.header},this.data).subscribe((res)=>{
       console.log(res);
     },(err) => {
       console.log(err);
     },()=>{
       alert("Student Profile Created!!!");
     })
+    this.router.navigate([`${role}/profile`]);
+    this.step1 = true;
+    this.step2 = false;
+
     // let data = {
     //   sid: JSON.parse(localStorage.getItem('loginData') ?? '').name.split(
     //     '@'
@@ -149,6 +157,7 @@ export class ProfileComponent implements OnInit {
     // console.log(data);
   }
   submitEmployeeProfile(){
+    let role = JSON.parse(localStorage.getItem('loginData')??'').type.toString();
     this.data = {
       "fname":this.fname,"lname":this.lname,"email":this.email,"dob":this.dob,"address1":this.address1,"address2":this.address2,
       "city":this.city,"state":this.state,"pin":this.pin,"clg_name":this.clg_name,"roll_number":this.roll_number,"enggbranch":this.enggbranch,
@@ -160,14 +169,13 @@ export class ProfileComponent implements OnInit {
     };
 
     //console.log("Hui" + "\n" + this.data)
-    this.http.post("http://localhost:8000/create_student",this.data).subscribe((res)=>{
+    this.http.post("http://localhost:8000/create_student",{headers:this.header},this.data).subscribe((res)=>{
       console.log(res);
     },(err) => {
       console.log(err);
     },()=>{
-      alert("Notice Created!!!");
+      alert("Profile Created");
     })
-
-    this.router.navigate([])
+    this.router.navigate([`${role}/profile`]);
   }
 }
