@@ -16,7 +16,7 @@ export class ApplicationPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.data = this.allpurpose.post;
-    console.log(this.data);
+    //console.log(this.data);
     let x:any = JSON.parse(localStorage.getItem('loginData')??'');
   }
 
@@ -26,9 +26,13 @@ export class ApplicationPreviewComponent implements OnInit {
 
   apply()
   {
+    let user_data = JSON.parse(localStorage.getItem('loginData')??'');
+    let email = user_data.name
+    let sid = user_data.name.split('@')[0]
+
     if(this.eligible == true)
     {
-      this.http.post("http://localhost:8000/insert_application",{"student_id": "S160215", "name": 'XXX', "email" : "12345", "phone": "123434", "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
+      this.http.post("http://localhost:8000/insert_application",{"student_id": sid, "name": 'XXX', "email" : email, "phone": "123434", "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
         console.log(res);
       },(err)=>{
         console.log(err);
