@@ -401,6 +401,128 @@ def fetch_applications():
 def fetch_application():
   return fetch_applications()
 
+
+def fetch_profile(email):
+    print("fetch called")
+    con = sql.connect("Internhub.db")
+    cur = con.cursor()
+    query = "SELECT * from PersonalData WHERE email = '" + str(email) + "'"
+    print(query)
+    cur.execute(query)
+    rows = cur.fetchall()
+    sid = ""
+    data = []
+    for row in rows:
+        sid = row[0]
+        data.append({
+            "sid":row[0],
+            "fname":row[1],
+            "lname":row[2],
+            "email":row[3],
+            "dob":row[4],
+            "address1":row[5],
+            "address2":row[6],
+            "city":row[7],
+            "state":row[8],
+            "pin":row[9]
+        })
+    query = '''
+            SELECT * from EducationalData
+            WHERE eid = ?
+    '''
+    cur.execute(query,(str(sid)))
+    rows = cur.fetchall()
+    for row in rows:
+        data.append({
+            "eid":row[0],
+            "clg_name":row[1],
+            "roll_number":row[2],
+            "enggbranch":row[3],
+            "enggdatejoin":row[4],
+            "enggdatecomplete":row[5],
+            "engge1s1":row[6],
+            "engge1s2":row[7],
+            "engge2s1":row[8],
+            "engge2s2":row[9],
+            "engge3s1":row[10],
+            "engge3s2":row[11],
+            "engge4s1":row[12],
+            "engge4s2":row[13],
+            "enggcgpa":row[14],
+            "pucbranch":row[15],
+            "pucdatejoin":row[16],
+            "pucdatecomplete":row[17],
+            "puc1":row[18],
+            "puc2":row[19],
+            "puccgpa":row[20],
+            "xboard":row[21],
+            "xdate":row[22],
+            "xcgpa":row[23],
+            "skills":row[24],
+            "path":row[25]
+        })
+    con.close()
+    data[0].update(data[1])
+    return data[0]
+# create student profile
+def create_profile(data):
+    print("Create Student Called")
+    con = sql.connect("internhub.db")
+    query = '''INSERT INTO PersonalData(first_name,
+               last_name,email,dob,address1,address2,
+               city,state,pincode)
+               VALUES (?,?,?,?,?,?,?,?,?)'''
+    con.execute(query,(
+                data["fname"],
+                data["lname"],data["email"],data["dob"],
+                data["address1"],data["address1"],
+                data["city"], data["state"], data["pin"]
+    ))
+    con.commit()
+    print(data)
+
+    query1 = '''INSERT INTO EducationalData(
+              collegename,
+               rollnumber,
+               branch,
+               clgjoining,
+                clgcompletion,
+                e1s1 ,
+                e1s2 ,
+                e2s1 ,
+                e2s2 ,
+                e3s1 ,
+                e3s2 ,
+                e4s1 ,
+                e4s2 ,
+                enggcgpa ,
+                pucbranch,
+                pucjoiningdate,
+                puccompletiondate ,
+                p1cgpa ,
+                p2cgpa ,
+                puccgpa ,
+                sscboard ,
+                ssccompletiondate ,
+                ssccgpa ,
+                skills ,
+                resume )
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+    con.execute(query1,(
+                data["clg_name"],data["roll_number"],data["enggbranch"],data["enggdatejoin"],data["enggdatecomplete"],data["engge1s1"],data["engge1s2"],
+                data["engge2s1"],data["engge2s2"],data["engge3s1"],data["engge3s2"],data["engge4s1"],data["engge4s2"],data["enggcgpa"],data["pucbranch"],
+                data["pucdatejoin"],data["pucdatecomplete"],data["puc1"],data["puc2"],
+                data["puccgpa"],data["xboard"],
+                data["xdate"], data["xcgpa"], data["skills"],data["path"]
+    ))
+    con.commit()
+    con.close()
+    return data["roll_number"]
+
+@app.get('/profile_data/{email}')
+async def profile_data(email):
+    return fetch_profile(email)
+
 #insert
 #http requests
 # post , get

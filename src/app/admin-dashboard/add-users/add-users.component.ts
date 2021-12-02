@@ -33,6 +33,7 @@ export class AddUsersComponent implements OnInit {
       this.showValid = true;
     },()=>{
       this.postData();
+
     });
     // this.postData();
   }
