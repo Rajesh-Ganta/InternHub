@@ -15,7 +15,10 @@ export class ApplicationPreviewComponent implements OnInit {
 
   user_data : any;
 
+  role : any = '';
+
   ngOnInit(): void {
+    this.role = JSON.parse(localStorage.getItem('loginData')??'').type;
     this.data = this.allpurpose.post;
     if(!this.data){
       let x:any = JSON.parse(localStorage.getItem('loginData')??'');
