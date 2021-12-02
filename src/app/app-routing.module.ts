@@ -12,6 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProfileComponent } from './student-dashboard/profile/profile.component';
 import { NotificationsComponent } from './student-dashboard/notifications/notifications.component';
 import { DashboardComponent } from './student-dashboard/dashboard/dashboard.component';
+import { ViewApplicationsComponent } from './admin-dashboard/view-applications/view-applications.component';
 
 const routes: Routes = [
   {
@@ -101,6 +102,10 @@ const routes: Routes = [
       {
         path:'application-view',
         component:ApplicationPreviewComponent
+      },
+      {
+        path:'applications',
+        component:ViewApplicationsComponent
       },
       {
         path:'**',
