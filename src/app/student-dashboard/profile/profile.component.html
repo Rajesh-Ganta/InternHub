@@ -1,7 +1,9 @@
 <div class="m-2 bg-light p-3 shadow-lg" id="container">
   <div class="container" *ngIf="step1">
-      <h3 class="card-title text-dark p-1">Personal Details</h3><button class="btn btn-info" (click)="editForm()"><i class="fa fa-edit"></i></button>
-
+      <h3 class="card-title text-dark p-1">Personal Details</h3>
+      <p  align="right">
+        <button class="btn btn-info" (click)="editForm()"><i class="fa fa-edit">Edit</i></button>
+      </p>
       <div class="row">
           <div class="col">
             <label for="inputName" class="p-2">First Name</label>

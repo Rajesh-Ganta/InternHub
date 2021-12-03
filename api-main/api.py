@@ -2,6 +2,7 @@ from os import name
 import sqlite3 as sql
 
 import email, smtplib, ssl
+from sqlite3.dbapi2 import ProgrammingError
 
 from email import encoders
 from email.mime.base import MIMEBase
@@ -404,7 +405,7 @@ def fetch_application():
 
 def fetch_profile(email):
     print("fetch called")
-    con = sql.connect("Internhub.db")
+    con = sql.connect("internhub.db")
     cur = con.cursor()
     query = "SELECT * from PersonalData WHERE email = '" + str(email) + "'"
     print(query)
@@ -426,44 +427,45 @@ def fetch_profile(email):
             "state":row[8],
             "pin":row[9]
         })
-    query = '''
-            SELECT * from EducationalData
-            WHERE eid = ?
-    '''
-    cur.execute(query,(str(sid)))
+    query = "SELECT * from EducationalData WHERE eid = '" + str(sid) + "'"
+    cur.execute(query)
+    print(query)
     rows = cur.fetchall()
+    print(rows)
     for row in rows:
-        data.append({
-            "eid":row[0],
-            "clg_name":row[1],
-            "roll_number":row[2],
-            "enggbranch":row[3],
-            "enggdatejoin":row[4],
-            "enggdatecomplete":row[5],
-            "engge1s1":row[6],
-            "engge1s2":row[7],
-            "engge2s1":row[8],
-            "engge2s2":row[9],
-            "engge3s1":row[10],
-            "engge3s2":row[11],
-            "engge4s1":row[12],
-            "engge4s2":row[13],
-            "enggcgpa":row[14],
-            "pucbranch":row[15],
-            "pucdatejoin":row[16],
-            "pucdatecomplete":row[17],
-            "puc1":row[18],
-            "puc2":row[19],
-            "puccgpa":row[20],
-            "xboard":row[21],
-            "xdate":row[22],
-            "xcgpa":row[23],
-            "skills":row[24],
-            "path":row[25]
-        })
+      data.append({
+          "eid":row[0],
+          "clg_name":row[1],
+          "roll_number":row[2],
+          "enggbranch":row[3],
+          "enggdatejoin":row[4],
+          "enggdatecomplete":row[5],
+          "engge1s1":row[6],
+          "engge1s2":row[7],
+          "engge2s1":row[8],
+          "engge2s2":row[9],
+          "engge3s1":row[10],
+          "engge3s2":row[11],
+          "engge4s1":row[12],
+          "engge4s2":row[13],
+          "enggcgpa":row[14],
+          "pucbranch":row[15],
+          "pucdatejoin":row[16],
+          "pucdatecomplete":row[17],
+          "puc1":row[18],
+          "puc2":row[19],
+          "puccgpa":row[20],
+          "xboard":row[21],
+          "xdate":row[22],
+          "xcgpa":row[23],
+          "skills":row[24],
+          "path":row[25]
+      })
     con.close()
+    print(data)
     data[0].update(data[1])
     return data[0]
+
 # create student profile
 def create_profile(data):
     print("Create Student Called")
@@ -521,6 +523,7 @@ def create_profile(data):
 
 @app.get('/profile_data/{email}')
 async def profile_data(email):
+    print(email)
     return fetch_profile(email)
 
 #insert

@@ -74,8 +74,8 @@ export class ProfileComponent implements OnInit {
 
       let user_data = JSON.parse(localStorage.getItem('loginData')??'');
       let email = user_data.name
-
-      this.http.get("http://localhost:8000/profile_data/" + email.toString()).subscribe((res)=>{
+      console.log(email);
+      this.http.get("http://localhost:8000/profile_data/" + email).subscribe((res)=>{
       this.data = res;
       console.log(res);
 
