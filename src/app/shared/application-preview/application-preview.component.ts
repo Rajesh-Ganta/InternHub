@@ -40,7 +40,7 @@ export class ApplicationPreviewComponent implements OnInit {
 
     if(this.eligible == true)
     {
-      this.http.post("http://localhost:8000/insert_application",{"student_id": sid, "name": 'Rajesh', "email" : email, "phone": "9848125637", "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
+      this.http.post("http://192.168.224.100:8000/insert_application",{"student_id": sid, "name": 'Rajesh', "email" : email, "phone": "9848125637", "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
         console.log(res);
       },(err)=>{
         console.log(err);

@@ -21,7 +21,7 @@ export class ViewApplicationsComponent implements OnInit {
 
   public get_applications()
   {
-    return this.http.get("http://localhost:8000/fetch_application")
+    return this.http.get("http://192.168.224.100:8000/fetch_application")
       .subscribe(
         (response) => {                           //Next callback
           console.log('response received')

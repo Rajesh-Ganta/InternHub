@@ -1,6 +1,8 @@
 import { AllPurposeService } from './../allpurposervice.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +16,14 @@ export class LoginComponent implements OnInit {
   errorValue = '';
   userType = '';
 
+  studentName:any='';
+  studentEmail:any='';
+  studentPhone:any='';
+  studentPassword:any='';
+  studentCPassword:any='';
 
-  constructor(private router: Router, private allPurpose: AllPurposeService) {}
+
+  constructor(private router: Router, private allPurpose: AllPurposeService,private http:HttpClient) {}
 
   ngOnInit(): void {
     console.log(this.allPurpose.encrypt("Guru"));
@@ -77,4 +85,28 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  register(){
+    if(this.studentCPassword!=this.studentPassword && (this.studentEmail!='' || this.studentPassword!='' || this.studentId!='' || this.studentPhone!='')){
+      this.errorValue = "Invalid Data";
+      this.isValid = true;
+      return;
+    }
+    let header = new HttpHeaders()
+   .set('content-type','application/json')
+   .set('Access-Control-Allow-Origin', '*');
+    this.http.post("http://192.168.224.100:8000/userdata",{"data":{sid:this.studentId,name:this.studentName,email:this.studentEmail,userType:'student'}},{headers:header}).subscribe((res)=>{
+      console.log(res);
+    },(err)=>{
+      console.log(err);
+    },()=>{
+      this.http.post(environment.firebaseSignUp,{email:this.studentEmail,password:this.studentPassword,returnSecureToken:true}).subscribe((res)=>{
+
+      },(err)=>{
+
+      },()=>{
+      })
+    })
+  }
 }
+

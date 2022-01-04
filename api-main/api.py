@@ -1,6 +1,6 @@
 from os import name
 import sqlite3 as sql
-
+import uvicorn
 import email, smtplib, ssl
 from sqlite3.dbapi2 import ProgrammingError
 
@@ -49,6 +49,19 @@ async def user_data(req:Request):
 	full_name = data["data"]["name"]
 	email = data["data"]["email"]
 	user_type = data["data"]["userType"]
+	sqli = "INSERT INTO USERS(sid,full_name,email,user_type) VALUES(?,?,?,?)"
+	conn.execute(sqli,(sid,full_name,email,user_type))
+	conn.commit()
+	return data
+
+@app.post('/register')
+async def user_data(req:Request):
+	conn = sql.connect("internhub.db")
+	data = await req.json()
+	sid = data["data"]["sid"]
+	full_name = data["data"]["name"]
+	email = data["data"]["email"]
+	user_type = "student"
 	sqli = "INSERT INTO USERS(sid,full_name,email,user_type) VALUES(?,?,?,?)"
 	conn.execute(sqli,(sid,full_name,email,user_type))
 	conn.commit()
@@ -220,7 +233,7 @@ def send_mails(receiver = "S160215@rguktsklm.ac.in"):
         There is a Notice posted in Placement Portal InternHub.<br>
         About an Intern or Job Oppurtunity <br>
         Visit the website and go through the details of offer<br>
-        Note: Complete your registration process as early as possible <a href="http://localhost:4200/admindb/posts" target="blank">click here</a>
+        Note: Complete your registration process as early as possible <a href="http://192.168.224.100:4200/admindb/posts" target="blank">click here</a>
       <h4>- Thanks and Regards</h4>
       Team Intern Hub
     </body>
@@ -749,3 +762,8 @@ async def profile_data(email):
 # con.execute(query, ("S160215", "G.Rajesh", "rajeshganta123456@gmail.com", "9492733997", "TCS", "1" ))
 # con.commit()
 # con.close()
+
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, port=8000, host='192.168.224.100')

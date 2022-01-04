@@ -26,7 +26,7 @@ export class PostcardComponent implements OnInit {
 
   public get_notices()
   {
-    return this.http.get("http://localhost:8000/get_notices")
+    return this.http.get("http://192.168.224.100:8000/get_notices")
       .subscribe(
         (response) => {                           //Next callback
           console.log('response received')
@@ -48,7 +48,7 @@ export class PostcardComponent implements OnInit {
   }
 
   delete_notice(notice_id: any){
-    this.http.post("http://localhost:8000/del_notice",{"notice_id" : notice_id}).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/del_notice",{"notice_id" : notice_id}).subscribe((res)=>{
       console.log(res);
     },(err)=>{
       console.log(err);

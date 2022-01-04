@@ -42,16 +42,22 @@ export class AddUsersComponent implements OnInit {
     let header = new HttpHeaders()
    .set('content-type','application/json')
    .set('Access-Control-Allow-Origin', '*');
-    this.http.post("http://localhost:8000/userdata",{"data":{sid:this.studentId,name:this.studentId,email:this.email,userType:this.userType}},{headers:header}).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/userdata",{"data":{sid:this.studentId,name:this.studentId,email:this.email,userType:this.userType}},{headers:header}).subscribe((res)=>{
       console.log(res);
     },(err)=>{
       console.log(err);
     },()=>{
-      alert("User Added Successfully!!!");
+      this.http.post(environment.firebaseSignUp,{email:this.email,password:this.password,returnSecureToken:true}).subscribe((res)=>{
+
+      },(err)=>{
+
+      },()=>{
+
       this.studentId = '';
       this.email = '';
       this.userType = '';
       this.password = '';
+      })
     })
   }
 }
