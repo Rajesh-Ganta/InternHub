@@ -1,7 +1,8 @@
 from os import name
 import sqlite3 as sql
-
+import uvicorn
 import email, smtplib, ssl
+from sqlite3.dbapi2 import ProgrammingError
 
 from email import encoders
 from email.mime.base import MIMEBase
@@ -48,6 +49,19 @@ async def user_data(req:Request):
 	full_name = data["data"]["name"]
 	email = data["data"]["email"]
 	user_type = data["data"]["userType"]
+	sqli = "INSERT INTO USERS(sid,full_name,email,user_type) VALUES(?,?,?,?)"
+	conn.execute(sqli,(sid,full_name,email,user_type))
+	conn.commit()
+	return data
+
+@app.post('/register')
+async def user_data(req:Request):
+	conn = sql.connect("internhub.db")
+	data = await req.json()
+	sid = data["data"]["sid"]
+	full_name = data["data"]["name"]
+	email = data["data"]["email"]
+	user_type = "student"
 	sqli = "INSERT INTO USERS(sid,full_name,email,user_type) VALUES(?,?,?,?)"
 	conn.execute(sqli,(sid,full_name,email,user_type))
 	conn.commit()
@@ -219,7 +233,7 @@ def send_mails(receiver = "S160215@rguktsklm.ac.in"):
         There is a Notice posted in Placement Portal InternHub.<br>
         About an Intern or Job Oppurtunity <br>
         Visit the website and go through the details of offer<br>
-        Note: Complete your registration process as early as possible <a href="http://localhost:4200/admindb/posts" target="blank">click here</a>
+        Note: Complete your registration process as early as possible <a href="http://192.168.111.86:4200/admindb/posts" target="blank">click here</a>
       <h4>- Thanks and Regards</h4>
       Team Intern Hub
     </body>
@@ -400,6 +414,130 @@ def fetch_applications():
 @app.get('/fetch_application')
 def fetch_application():
   return fetch_applications()
+
+
+def fetch_profile(email):
+    print("fetch called")
+    con = sql.connect("internhub.db")
+    cur = con.cursor()
+    query = "SELECT * from PersonalData WHERE email = '" + str(email) + "'"
+    print(query)
+    cur.execute(query)
+    rows = cur.fetchall()
+    sid = ""
+    data = []
+    for row in rows:
+        sid = row[0]
+        data.append({
+            "sid":row[0],
+            "fname":row[1],
+            "lname":row[2],
+            "email":row[3],
+            "dob":row[4],
+            "address1":row[5],
+            "address2":row[6],
+            "city":row[7],
+            "state":row[8],
+            "pin":row[9]
+        })
+    query = "SELECT * from EducationalData WHERE eid = '" + str(sid) + "'"
+    cur.execute(query)
+    print(query)
+    rows = cur.fetchall()
+    print(rows)
+    for row in rows:
+      data.append({
+          "eid":row[0],
+          "clg_name":row[1],
+          "roll_number":row[2],
+          "enggbranch":row[3],
+          "enggdatejoin":row[4],
+          "enggdatecomplete":row[5],
+          "engge1s1":row[6],
+          "engge1s2":row[7],
+          "engge2s1":row[8],
+          "engge2s2":row[9],
+          "engge3s1":row[10],
+          "engge3s2":row[11],
+          "engge4s1":row[12],
+          "engge4s2":row[13],
+          "enggcgpa":row[14],
+          "pucbranch":row[15],
+          "pucdatejoin":row[16],
+          "pucdatecomplete":row[17],
+          "puc1":row[18],
+          "puc2":row[19],
+          "puccgpa":row[20],
+          "xboard":row[21],
+          "xdate":row[22],
+          "xcgpa":row[23],
+          "skills":row[24],
+          "path":row[25]
+      })
+    con.close()
+    print(data)
+    data[0].update(data[1])
+    return data[0]
+
+# create student profile
+def create_profile(data):
+    print("Create Student Called")
+    con = sql.connect("internhub.db")
+    query = '''INSERT INTO PersonalData(first_name,
+               last_name,email,dob,address1,address2,
+               city,state,pincode)
+               VALUES (?,?,?,?,?,?,?,?,?)'''
+    con.execute(query,(
+                data["fname"],
+                data["lname"],data["email"],data["dob"],
+                data["address1"],data["address1"],
+                data["city"], data["state"], data["pin"]
+    ))
+    con.commit()
+    print(data)
+
+    query1 = '''INSERT INTO EducationalData(
+              collegename,
+               rollnumber,
+               branch,
+               clgjoining,
+                clgcompletion,
+                e1s1 ,
+                e1s2 ,
+                e2s1 ,
+                e2s2 ,
+                e3s1 ,
+                e3s2 ,
+                e4s1 ,
+                e4s2 ,
+                enggcgpa ,
+                pucbranch,
+                pucjoiningdate,
+                puccompletiondate ,
+                p1cgpa ,
+                p2cgpa ,
+                puccgpa ,
+                sscboard ,
+                ssccompletiondate ,
+                ssccgpa ,
+                skills ,
+                resume )
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+    con.execute(query1,(
+                data["clg_name"],data["roll_number"],data["enggbranch"],data["enggdatejoin"],data["enggdatecomplete"],data["engge1s1"],data["engge1s2"],
+                data["engge2s1"],data["engge2s2"],data["engge3s1"],data["engge3s2"],data["engge4s1"],data["engge4s2"],data["enggcgpa"],data["pucbranch"],
+                data["pucdatejoin"],data["pucdatecomplete"],data["puc1"],data["puc2"],
+                data["puccgpa"],data["xboard"],
+                data["xdate"], data["xcgpa"], data["skills"],data["path"]
+    ))
+    con.commit()
+    con.close()
+    return data["roll_number"]
+
+@app.get('/profile_data/{email}')
+async def profile_data(email):
+    print(email)
+    return fetch_profile(email)
 
 #insert
 #http requests
@@ -624,3 +762,8 @@ def fetch_application():
 # con.execute(query, ("S160215", "G.Rajesh", "rajeshganta123456@gmail.com", "9492733997", "TCS", "1" ))
 # con.commit()
 # con.close()
+
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, port=8000, host='192.168.111.86')

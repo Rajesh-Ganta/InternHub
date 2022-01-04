@@ -2,8 +2,8 @@
     <div class="card-header">
       <div class="row p-1">
         <div class="text-muted h4 col-sm-10 mx-2 mt-1">Preview</div>
-        <button class="btn btn-primary col m-1">Print</button>
-        <button class="btn btn-success col m-1">Send</button>
+        <!-- <button class="btn btn-primary col m-1">Print</button>
+        <button class="btn btn-success col m-1">Send</button> -->
       </div>
     </div>
     <div class="card-body shadow-sm">
@@ -215,7 +215,7 @@
     </div>
   </div>
   <hr>
-  <div class="card m-2 shadow-sm bordered">
+  <div class="card m-2 shadow-sm bordered" *ngIf="role!='admindb'">
     <h4>Eligibility Criteria:</h4>
       <ul style = "list-style-type: square;">
           <li>Eligibility Criteria of Company are Satisfied</li>

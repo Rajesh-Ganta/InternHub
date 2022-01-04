@@ -17,7 +17,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   getNotifications(){
-    this.http.get("http://localhost:8000/notify").subscribe((res)=>{
+    this.http.get("http://192.168.111.86:8000/notify").subscribe((res)=>{
       this.notifications = res;
       console.log(this.notifications);
 
