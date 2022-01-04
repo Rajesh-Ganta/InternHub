@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
       let user_data = JSON.parse(localStorage.getItem('loginData')??'');
       let email = user_data.name
       console.log(email);
-      this.http.get("http://192.168.224.100:8000/profile_data/" + email).subscribe((res)=>{
+      this.http.get("http://192.168.111.86:8000/profile_data/" + email).subscribe((res)=>{
       this.data = res;
       console.log(res);
 
@@ -178,7 +178,7 @@ export class ProfileComponent implements OnInit {
       "path":this.pathOfFile
     };
     console.log(this.data)
-    this.http.post("http://192.168.224.100:8000/create_student",this.data).subscribe((res)=>{
+    this.http.post("http://192.168.111.86:8000/create_student",this.data).subscribe((res)=>{
       console.log(res);
     },(err) => {
       console.log(err);
@@ -216,7 +216,7 @@ export class ProfileComponent implements OnInit {
     };
 
     //console.log("Hui" + "\n" + this.data)
-    this.http.post("http://192.168.224.100:8000/create_student",{headers:this.header},this.data).subscribe((res)=>{
+    this.http.post("http://192.168.111.86:8000/create_student",{headers:this.header},this.data).subscribe((res)=>{
       console.log(res);
     },(err) => {
       console.log(err);

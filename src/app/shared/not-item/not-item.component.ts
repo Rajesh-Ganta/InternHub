@@ -18,7 +18,7 @@ export class NotItemComponent implements OnInit {
     let header = new HttpHeaders()
    .set('content-type','application/json')
    .set('Access-Control-Allow-Origin', '*');
-    this.http.post('http://192.168.224.100:8000/delete_not',{id:id},{headers:header}).subscribe((res)=>{
+    this.http.post('http://192.168.111.86:8000/delete_not',{id:id},{headers:header}).subscribe((res)=>{
       console.log(res);
       window.location.reload();
     })

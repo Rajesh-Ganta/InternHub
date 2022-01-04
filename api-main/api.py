@@ -233,7 +233,7 @@ def send_mails(receiver = "S160215@rguktsklm.ac.in"):
         There is a Notice posted in Placement Portal InternHub.<br>
         About an Intern or Job Oppurtunity <br>
         Visit the website and go through the details of offer<br>
-        Note: Complete your registration process as early as possible <a href="http://192.168.224.100:4200/admindb/posts" target="blank">click here</a>
+        Note: Complete your registration process as early as possible <a href="http://192.168.111.86:4200/admindb/posts" target="blank">click here</a>
       <h4>- Thanks and Regards</h4>
       Team Intern Hub
     </body>
@@ -766,4 +766,4 @@ async def profile_data(email):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, port=8000, host='192.168.224.100')
+    uvicorn.run(app, port=8000, host='192.168.111.86')
