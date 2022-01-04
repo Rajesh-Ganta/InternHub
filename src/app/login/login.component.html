@@ -4,7 +4,7 @@
       <img src="https://media-exp1.licdn.com/dms/image/C4D0BAQGTLlTnEgAbkQ/company-logo_200_200/0/1626353935074?e=2159024400&v=beta&t=T5r70gFY0fvqVefjZnygRz3sflzNd2Mdiyl_B--O3GI" alt="" style="width: 450px;height:400px;border-radius: 50%;box-shadow: 5px 10px 10px #ccc;">
     </div>
     <div class="col mt-5" style="margin-left:250px;margin-top: 200px!important;">
-      <div class="card shadow rounded-4 p-2 border border-light">
+      <div class="card shadow rounded-4 p-2 border border-light" *ngIf="!isSign">
         <div class="card-body p-5 p-sm-5">
           <h5 class="card-title text-center mb-3 fw-light fs-5">Sign In</h5>
           <!-- For Error Modal -->
@@ -31,10 +31,10 @@
               <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" (click)="login()">Sign
                 in</button>
             </div>
+            <div class="text-primary mt-2 text-center cursorpointer" (click)="isSign=!isSign">Register?</div>
         </div>
       </div>
-      <br>
-      <div class="card shadow rounded-4 p-2 border border-light">
+      <div class="card shadow rounded-4 p-2 border border-light" *ngIf="isSign">
         <div class="card-body p-5 p-sm-5">
           <h5 class="card-title text-center mb-3 fw-light fs-5">Register</h5>
           <!-- For Error Modal -->
@@ -43,7 +43,7 @@
             </div>
           <!-- For Error Modal -->
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" placeholder="S160552" [(ngModel)]="studentId">
+              <input type="text" class="form-control" placeholder="S160552" [(ngModel)]="studentSId">
               <label for="floatingInput">Student Id</label>
             </div>
             <div class="form-floating mb-3">
@@ -72,6 +72,7 @@
             <div class="d-grid">
               <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" (click)="register()" [disabled]="studentCPassword!==studentPassword">Register</button>
             </div>
+            <div class="text-primary mt-2 text-center cursorpointer" (click)="isSign=!isSign">Login?</div>
         </div>
       </div>
     </div>

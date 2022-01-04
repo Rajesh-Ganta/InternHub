@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit {
   studentPhone:any='';
   studentPassword:any='';
   studentCPassword:any='';
+  studentSId:any = '';
+
+  isSign:boolean=false;
 
 
   constructor(private router: Router, private allPurpose: AllPurposeService,private http:HttpClient) {}
@@ -101,9 +104,7 @@ export class LoginComponent implements OnInit {
       console.log(err);
     },()=>{
       this.http.post(environment.firebaseSignUp,{email:this.studentEmail,password:this.studentPassword,returnSecureToken:true}).subscribe((res)=>{
-
       },(err)=>{
-
       },()=>{
       })
     })
