@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
     let header = new HttpHeaders()
    .set('content-type','application/json')
    .set('Access-Control-Allow-Origin', '*');
-    this.http.post("http://192.168.111.86:8000/userdata",{"data":{sid:this.studentId,name:this.studentName,email:this.studentEmail,userType:'student'}},{headers:header}).subscribe((res)=>{
+    this.http.post("http://192.168.111.86:8000/userdata",{"data":{sid:this.studentId.toLocaleLowerCase(),name:this.studentName,email:this.studentEmail,userType:'student'}},{headers:header}).subscribe((res)=>{
       console.log(res);
     },(err)=>{
       console.log(err);
