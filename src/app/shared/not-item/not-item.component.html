@@ -14,7 +14,7 @@
       </div>
       <div class="col-sm-1">
           <div class="viewitem">
-            <button type="button" class="btn btn-outline-danger mx-3" (click)="deleteNot(data.notification_id)">Delete</button>
+            <button *ngIf="userType!='studentdb'" type="button" class="btn btn-outline-danger mx-3" (click)="deleteNot(data.notification_id)">Delete</button>
           </div>
       </div>
     </div>

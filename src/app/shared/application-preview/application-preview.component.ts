@@ -37,6 +37,7 @@ export class ApplicationPreviewComponent implements OnInit {
     let email = user_data.name
     let sid = user_data.name.split('@')[0]
     let role = user_data.type;
+    const phone =  user_data.phone;
 
     if(this.eligible == true)
     {

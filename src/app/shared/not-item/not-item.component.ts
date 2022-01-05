@@ -10,8 +10,10 @@ export class NotItemComponent implements OnInit {
 
   @Input("data") data:any;
   constructor(private http:HttpClient) { }
-
+  userType:any = '';
   ngOnInit(): void {
+    let data = JSON.parse(localStorage.getItem('loginData')??'');
+    this.userType = data.type;
   }
 
   deleteNot(id:any){

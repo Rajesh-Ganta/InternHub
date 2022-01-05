@@ -61,11 +61,13 @@ export class LoginComponent implements OnInit {
   }
   //for checking user type we are using this function
   checkUserType() {
+    let phone='';
     this.allPurpose.getUsers(this.studentId).subscribe(
       (res: any) => {
         Object.keys(res).forEach((k) => {
           if (res[k].email == this.studentId) {
             this.userType = res[k].user_type;
+            phone = res[k].phone;
           }
         });
         console.log(this.userType);
@@ -83,7 +85,7 @@ export class LoginComponent implements OnInit {
         this.allPurpose.userType = this.userType;
         this.allPurpose.isAuth = true;
         // localStorage.setItem('loginData',JSON.stringify({name:this.studentId,type:this.userType}));
-        localStorage.setItem("loginData",JSON.stringify({name:this.studentId,type:this.userType+'db'}));
+        localStorage.setItem("loginData",JSON.stringify({name:this.studentId,type:this.userType+'db',phone:phone}));
         this.router.navigateByUrl(this.userType+'db')
       }
     );
@@ -98,7 +100,7 @@ export class LoginComponent implements OnInit {
     let header = new HttpHeaders()
    .set('content-type','application/json')
    .set('Access-Control-Allow-Origin', '*');
-    this.http.post("http://192.168.224.100:8000/userdata",{"data":{sid:this.studentId.toLocaleLowerCase(),name:this.studentName,email:this.studentEmail,userType:'student'}},{headers:header}).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/userdata",{"data":{sid:this.studentSId.toLocaleLowerCase(),name:this.studentName,email:this.studentEmail,userType:'student',phone:this.studentPhone}},{headers:header}).subscribe((res)=>{
       console.log(res);
     },(err)=>{
       console.log(err);
@@ -106,6 +108,7 @@ export class LoginComponent implements OnInit {
       this.http.post(environment.firebaseSignUp,{email:this.studentEmail,password:this.studentPassword,returnSecureToken:true}).subscribe((res)=>{
       },(err)=>{
       },()=>{
+        this.router.navigateByUrl('/');
       })
     })
   }

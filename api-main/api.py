@@ -26,6 +26,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
 def fetch_data():
 	conn = sql.connect("internhub.db")
 	data = {}
@@ -33,7 +35,7 @@ def fetch_data():
 	cur.execute("SELECT * FROM USERS")
 	rows = cur.fetchall()
 	for row in rows:
-		data[row[0]] = {"fname":row[1],"email":row[2],"user_type":row[3]}
+		data[row[0]] = {"fname":row[1],"email":row[2],"user_type":row[3],"phone":row[4]}
 	conn.close()
 	return data
 
@@ -43,16 +45,17 @@ def get_userdata():
 
 @app.post('/userdata')
 async def user_data(req:Request):
-	conn = sql.connect("internhub.db")
-	data = await req.json()
-	sid = data["data"]["sid"]
-	full_name = data["data"]["name"]
-	email = data["data"]["email"]
-	user_type = data["data"]["userType"]
-	sqli = "INSERT INTO USERS(sid,full_name,email,user_type) VALUES(?,?,?,?)"
-	conn.execute(sqli,(sid,full_name,email,user_type))
-	conn.commit()
-	return data
+  conn = sql.connect("internhub.db")
+  data = await req.json()
+  sid = data["data"]["sid"]
+  full_name = data["data"]["name"]
+  email = data["data"]["email"]
+  phone = data["data"]["phone"]
+  user_type = data["data"]["userType"]
+  sqli = "INSERT INTO USERS(sid,full_name,email,user_type,phone) VALUES(?,?,?,?,?)"
+  conn.execute(sqli,(sid,full_name,email,user_type,phone))
+  conn.commit()
+  return data
 
 @app.post('/register')
 async def user_data(req:Request):
@@ -827,4 +830,4 @@ async def profile_data(email):
 
 
 if __name__ == '__main__':
-  uvicorn.run(app, port=8000, host='192.168.224.100')
+    uvicorn.run(app, port=8000, host='192.168.224.100')
