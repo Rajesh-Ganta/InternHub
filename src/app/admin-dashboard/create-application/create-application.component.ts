@@ -93,12 +93,12 @@ export class CreateApplicationComponent implements OnInit {
                   "third_party_details" : this.third_party_details
                 };
     console.log(this.data);
-    this.http.post("http://192.168.111.86:8000/create_notice",this.data).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/create_notice",this.data).subscribe((res)=>{
       console.log(res);
     },(err)=>{
       console.log(err);
     },()=>{
-      this.http.post("http://192.168.111.86:8000/notify_post",{"logo": this.logo_url, "company_name": this.company_name, "tag_line" : "Apply for oppurtunity at " + this.company_name }).subscribe((res)=>{
+      this.http.post("http://192.168.224.100:8000/notify_post",{"logo": this.logo_url, "company_name": this.company_name, "tag_line" : "Apply for oppurtunity at " + this.company_name }).subscribe((res)=>{
           console.log(res);
         },(err)=>{
           console.log(err);

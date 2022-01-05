@@ -42,7 +42,7 @@ export class AddUsersComponent implements OnInit {
     let header = new HttpHeaders()
    .set('content-type','application/json')
    .set('Access-Control-Allow-Origin', '*');
-    this.http.post("http://192.168.111.86:8000/userdata",{"data":{sid:this.studentId.toLocaleLowerCase(),name:this.studentId.toLocaleLowerCase,email:this.email,userType:this.userType}},{headers:header}).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/userdata",{"data":{sid:this.studentId.toLocaleLowerCase(),name:this.studentId.toLocaleLowerCase,email:this.email,userType:this.userType}},{headers:header}).subscribe((res)=>{
       console.log(res);
     },(err)=>{
       console.log(err);

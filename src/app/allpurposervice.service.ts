@@ -16,7 +16,7 @@ export class AllPurposeService {
   post : any;
 
   //for getting type of the users we use this JSON API
-  usersUrl : string = "http://192.168.111.86:8000/";
+  usersUrl : string = "http://192.168.224.100:8000/";
 
   //for storing sigin details
   loginId : string ='';

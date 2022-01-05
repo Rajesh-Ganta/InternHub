@@ -70,15 +70,15 @@ async def user_data(req:Request):
 
 #fetching data
 def fetch_note_data():
-    con = sql.connect("internhub.db")
-    data = []
-    cur = con.cursor()
-    cur.execute("SELECT * FROM NOTIFICATION")
-    rows = cur.fetchall()
-    for row in rows:
-    	data.append({"notification_id":row[0],"logo":row[1],"company_name":row[2],"tag_line":row[3],"isDelete":row[4],"isViewed":row[5]})
-    con.close()
-    return data
+  con = sql.connect("internhub.db")
+  data = []
+  cur = con.cursor()
+  cur.execute("SELECT * FROM NOTIFICATION")
+  rows = cur.fetchall()
+  for row in rows:
+    data.append({"notification_id":row[0],"logo":row[1],"company_name":row[2],"tag_line":row[3],"isDelete":row[4],"isViewed":row[5]})
+  con.close()
+  return data
 
 @app.get('/notify')
 def get_notification():
@@ -233,7 +233,7 @@ def send_mails(receiver = "S160215@rguktsklm.ac.in"):
         There is a Notice posted in Placement Portal InternHub.<br>
         About an Intern or Job Oppurtunity <br>
         Visit the website and go through the details of offer<br>
-        Note: Complete your registration process as early as possible <a href="http://192.168.111.86:4200/admindb/posts" target="blank">click here</a>
+        Note: Complete your registration process as early as possible <a href="http://192.168.224.100:4200/admindb/posts" target="blank">click here</a>
       <h4>- Thanks and Regards</h4>
       Team Intern Hub
     </body>
@@ -399,15 +399,15 @@ async def insert_application(req: Request):
 
 #fetching data
 def fetch_applications():
-    con = sql.connect("internhub.db")
-    data = []
-    cur = con.cursor()
-    cur.execute("SELECT * FROM APPLICATIONS")
-    rows = cur.fetchall()
-    for row in rows:
-    	data.append({"application_id":row[0],"student_id":row[1],"name":row[2],"email":row[3],"phone":row[4],"company_name":row[5], "applied_time" : row[6], "notice_id": row[7]})
-    con.close()
-    return data
+  con = sql.connect("internhub.db")
+  data = []
+  cur = con.cursor()
+  cur.execute("SELECT * FROM APPLICATIONS")
+  rows = cur.fetchall()
+  for row in rows:
+    data.append({"application_id":row[0],"student_id":row[1],"name":row[2],"email":row[3],"phone":row[4],"company_name":row[5], "applied_time" : row[6], "notice_id": row[7]})
+  con.close()
+  return data
 
 #CREATE TABLE "APPLICATIONS" ( "application_id" INTEGER, "student_id" VARCHAR(255), "name" VARCHAR(255), "email" VARCHAR(255), "phone" VARCHAR(255), "company_name" VARCHAR(255), "applied_time" VARCHAR(255), "notice_id" VARCHAR(255), PRIMARY KEY("application_id" AUTOINCREMENT) )
 
@@ -421,7 +421,7 @@ def fetch_profile(email):
     con = sql.connect("internhub.db")
     cur = con.cursor()
     query = "SELECT * from PersonalData WHERE email = '" + str(email) + "'"
-    print(query)
+    # print(query)
     cur.execute(query)
     rows = cur.fetchall()
     sid = ""
@@ -442,9 +442,9 @@ def fetch_profile(email):
         })
     query = "SELECT * from EducationalData WHERE eid = '" + str(sid) + "'"
     cur.execute(query)
-    print(query)
+    #print(query)
     rows = cur.fetchall()
-    print(rows)
+    # print(rows)
     for row in rows:
       data.append({
           "eid":row[0],
@@ -475,7 +475,7 @@ def fetch_profile(email):
           "path":row[25]
       })
     con.close()
-    print(data)
+    # print(data)
     data[0].update(data[1])
     return data[0]
 
@@ -533,6 +533,68 @@ def create_profile(data):
     con.commit()
     con.close()
     return data["roll_number"]
+
+
+@app.post('/update_profile')
+async def update_profile(req: Request):
+    data = await req.json()
+    print(data)
+    return edit_profile(data)
+
+def edit_profile(data):
+  print("Updated Student Called")
+  print(data)
+  con = sql.connect("internhub.db")
+  query = '''UPDATE PersonalData SET first_name = ?,
+               last_name= ?,email= ?,dob= ?,address1= ?,address2= ?,
+               city= ?,state= ?,pincode=? where sid = ?'''
+  con.execute(query,(
+              data["fname"],
+              data["lname"],data["email"],data["dob"],
+              data["address1"],data["address1"],
+              data["city"], data["state"], data["pin"],data["id"]
+  ))
+  con.commit()
+  print(data)
+
+  """ query1 = '''INSERT INTO EducationalData(
+            collegename,
+              rollnumber,
+              branch,
+              clgjoining,
+              clgcompletion,
+              e1s1 ,
+              e1s2 ,
+              e2s1 ,
+              e2s2 ,
+              e3s1 ,
+              e3s2 ,
+              e4s1 ,
+              e4s2 ,
+              enggcgpa ,
+              pucbranch,
+              pucjoiningdate,
+              puccompletiondate ,
+              p1cgpa ,
+              p2cgpa ,
+              puccgpa ,
+              sscboard ,
+              ssccompletiondate ,
+              ssccgpa ,
+              skills ,
+              resume )
+              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+  con.execute(query1,(
+              data["clg_name"],data["roll_number"],data["enggbranch"],data["enggdatejoin"],data["enggdatecomplete"],data["engge1s1"],data["engge1s2"],
+              data["engge2s1"],data["engge2s2"],data["engge3s1"],data["engge3s2"],data["engge4s1"],data["engge4s2"],data["enggcgpa"],data["pucbranch"],
+              data["pucdatejoin"],data["pucdatecomplete"],data["puc1"],data["puc2"],
+              data["puccgpa"],data["xboard"],
+              data["xdate"], data["xcgpa"], data["skills"],data["path"]
+  ))
+  con.commit()
+  con.close()
+   """
+  return data
 
 @app.get('/profile_data/{email}')
 async def profile_data(email):
@@ -764,6 +826,5 @@ async def profile_data(email):
 # con.close()
 
 
-
 if __name__ == '__main__':
-    uvicorn.run(app, port=8000, host='192.168.111.86')
+  uvicorn.run(app, port=8000, host='192.168.224.100')

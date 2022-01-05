@@ -75,7 +75,7 @@ export class ProfileComponent implements OnInit {
       let user_data = JSON.parse(localStorage.getItem('loginData')??'');
       let email = user_data.name
       console.log(email);
-      this.http.get("http://192.168.111.86:8000/profile_data/" + email).subscribe((res)=>{
+      this.http.get("http://192.168.224.100:8000/profile_data/" + email).subscribe((res)=>{
       this.data = res;
       console.log(res);
 
@@ -166,7 +166,7 @@ export class ProfileComponent implements OnInit {
     //   }
     // );
   }
-  updateData() {
+  create_profile() {
     // console.log("Update Called");
     this.data = {
       "fname":this.fname,"lname":this.lname,"email":this.email,"dob":this.dob,"address1":this.address1,"address2":this.address2,
@@ -178,7 +178,7 @@ export class ProfileComponent implements OnInit {
       "path":this.pathOfFile
     };
     console.log(this.data)
-    this.http.post("http://192.168.111.86:8000/create_student",this.data).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/create_student",this.data).subscribe((res)=>{
       console.log(res);
     },(err) => {
       console.log(err);
@@ -203,6 +203,30 @@ export class ProfileComponent implements OnInit {
     // console.log("Hui" + "\n" + this.data)
     // console.log(data);
   }
+
+  update_profile()
+  {
+    this.data = {
+      "fname":this.fname,"lname":this.lname,"email":this.email,"dob":this.dob,"address1":this.address1,"address2":this.address2,
+      "city":this.city,"state":this.state,"pin":this.pin,"clg_name":this.clg_name,"roll_number":this.roll_number,"enggbranch":this.enggbranch,
+      "enggdatejoin":this.enggdatejoin,"enggdatecomplete":this.enggdatecomplete,"engge1s1":this.engge1s1,"engge1s2":this.engge1s2,
+      "engge2s1":this.engge2s1,"engge2s2":this.engge2s2,"engge3s1":this.engge3s1,"engge3s2":this.engge3s2,"engge4s1":this.engge4s1,
+      "engge4s2":this.engge4s2,"enggcgpa":this.enggcgpa,"pucbranch":this.pucbranch,"pucdatejoin":this.pucdatejoin,"pucdatecomplete":this.pucdatecomplete,
+      "puc1":this.puc1,"puc2":this.puc2,"puccgpa":this.puccgpa,"xboard":this.xboard,"xcgpa":this.xcgpa,"xdate":this.xdate,"skills":this.skills,
+      "path":this.pathOfFile
+    };
+    console.log(this.data);
+    console.log("Data accesed");
+    this.http.post("http://192.168.224.100:8000/update_profile",{headers:this.header}, this.data).subscribe((res)=>{
+      console.log(res);
+    },(err) => {
+      console.log(err);
+    },()=>{
+      alert("Profile Updated");
+    })
+
+  }
+
   submitEmployeeProfile(){
     let role = JSON.parse(localStorage.getItem('loginData')??'').type.toString();
     this.data = {
@@ -216,7 +240,7 @@ export class ProfileComponent implements OnInit {
     };
 
     //console.log("Hui" + "\n" + this.data)
-    this.http.post("http://192.168.111.86:8000/create_student",{headers:this.header},this.data).subscribe((res)=>{
+    this.http.post("http://192.168.224.100:8000/create_student",{headers:this.header},this.data).subscribe((res)=>{
       console.log(res);
     },(err) => {
       console.log(err);
