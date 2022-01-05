@@ -541,7 +541,6 @@ def create_profile(data):
 @app.post('/update_profile')
 async def update_profile(req: Request):
     data = await req.json()
-    print(data)
     return edit_profile(data)
 
 def edit_profile(data):
@@ -550,55 +549,53 @@ def edit_profile(data):
   con = sql.connect("internhub.db")
   query = '''UPDATE PersonalData SET first_name = ?,
                last_name= ?,email= ?,dob= ?,address1= ?,address2= ?,
-               city= ?,state= ?,pincode=? where sid = ?'''
+               city= ?,state= ?,pincode=? where email = ?'''
   con.execute(query,(
               data["fname"],
               data["lname"],data["email"],data["dob"],
               data["address1"],data["address1"],
-              data["city"], data["state"], data["pin"],data["id"]
+              data["city"], data["state"], data["pin"],data["email"]
   ))
   con.commit()
   print(data)
 
-  """ query1 = '''INSERT INTO EducationalData(
-            collegename,
-              rollnumber,
-              branch,
-              clgjoining,
-              clgcompletion,
-              e1s1 ,
-              e1s2 ,
-              e2s1 ,
-              e2s2 ,
-              e3s1 ,
-              e3s2 ,
-              e4s1 ,
-              e4s2 ,
-              enggcgpa ,
-              pucbranch,
-              pucjoiningdate,
-              puccompletiondate ,
-              p1cgpa ,
-              p2cgpa ,
-              puccgpa ,
-              sscboard ,
-              ssccompletiondate ,
-              ssccgpa ,
-              skills ,
-              resume )
-              VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
+  query1 = '''UPDATE EducationalData SET
+            collegename = ?,
+              rollnumber = ?,
+              branch = ?,
+              clgjoining = ?,
+              clgcompletion = ?,
+              e1s1  = ?,
+              e1s2  = ?,
+              e2s1  = ?,
+              e2s2  = ?,
+              e3s1  = ?,
+              e3s2  = ?,
+              e4s1  = ?,
+              e4s2  = ?,
+              enggcgpa  = ?,
+              pucbranch = ?,
+              pucjoiningdate = ?,
+              puccompletiondate  = ?,
+              p1cgpa  = ?,
+              p2cgpa  = ?,
+              puccgpa  = ?,
+              sscboard  = ?,
+              ssccompletiondate  = ?,
+              ssccgpa  = ?,
+              skills  = ?,
+              resume = ?
+              where rollnumber = ? '''
   con.execute(query1,(
               data["clg_name"],data["roll_number"],data["enggbranch"],data["enggdatejoin"],data["enggdatecomplete"],data["engge1s1"],data["engge1s2"],
               data["engge2s1"],data["engge2s2"],data["engge3s1"],data["engge3s2"],data["engge4s1"],data["engge4s2"],data["enggcgpa"],data["pucbranch"],
               data["pucdatejoin"],data["pucdatecomplete"],data["puc1"],data["puc2"],
               data["puccgpa"],data["xboard"],
-              data["xdate"], data["xcgpa"], data["skills"],data["path"]
+              data["xdate"], data["xcgpa"], data["skills"],data["path"],data['student_id']
   ))
   con.commit()
   con.close()
-   """
   return data
-
 @app.get('/profile_data/{email}')
 async def profile_data(email):
     print(email)

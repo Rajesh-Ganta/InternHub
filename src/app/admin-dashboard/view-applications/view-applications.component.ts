@@ -76,8 +76,9 @@ export class ViewApplicationsComponent implements OnInit {
   //for downloading
 
   Download() {
+    var name = this.applications[0]["company_name"];
     var html = document.querySelector("table")!.outerHTML;
-    this.export_table_to_csv(html, "web_strings.csv");
+    this.export_table_to_csv(html, name+" registration data.csv");
   }
   export_table_to_csv(html:any, filename:any) {
     var csv = [];

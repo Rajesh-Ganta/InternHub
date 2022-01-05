@@ -17,7 +17,7 @@
      <div class="row">
           <div class="col col-md-6">
             <label for="inputEmail4" class="p-2">Email</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="e.g. s160552@rguktkslm.ac.in" disabled={{disable}} [(ngModel)]="email">
+            <input type="email" class="form-control" id="inputEmail4" placeholder="will be Updated automatically" disabled [(ngModel)]="email">
           </div>
           <div class="col col-md-6">
             <label for="inputRoll" class="p-2">DOB</label>
@@ -87,14 +87,17 @@
 <hr>
 <div class="container" *ngIf="step2">
   <h3 class="card-title text-dark p-1">Educational Details</h3>
+  <p  align="right">
+    <button class="btn btn-info" (click)="editForm()"><i class="fa fa-edit">Edit</i></button>
+  </p>
   <div class="row">
       <div class="col">
         <label for="inputName" class="p-2">College Name</label>
         <input type="collegeName" class="form-control" id="inputEmail4" value="Rajiv Gandhi University of Knowledge Technologies Srikakulam" disabled>
       </div>
-      <div class="col">
+      <div class="col" *ngIf="data!=null">
           <label for="inputRoll" class="p-2">Roll Number</label>
-          <input type="text" class="form-control" id="inputRoll" placeholder="S160xxx" disabled={{disable}} [(ngModel)]="roll_number">
+          <input type="text" class="form-control" id="inputRoll" placeholder="will be Updated automatically" disabled [(ngModel)]="roll_number">
       </div>
     </div>
     <br>
@@ -228,10 +231,11 @@
 <div class="col p-2" style="margin-left: 80px!important;" *ngIf="currentUser!='admindb'">
 <button class="btn btn-info m-2" *ngIf="step2" (click)="previousStep()">Previous</button>
 <button class="btn btn-warning m-2" *ngIf="step1" (click)="nextStep()">Next</button>
-<button class="btn btn-warning m-2" *ngIf="step2"  (click)="update_profile()">Update</button>
-<button class="btn btn-primary m-2" *ngIf="step2" (click)="create_profile()">create</button>
+<button class="btn btn-warning m-2" *ngIf="step2 && data!=null"  (click)="update_profile()">Update</button>
+<button class="btn btn-primary m-2" *ngIf="step2 && data==null" (click)="create_profile()">create</button>
 </div>
 <div class="col " style="margin-left: 80px!important;" *ngIf="currentUser=='admindb'">
-  <button class="btn btn-info m-2" (click)="submitEmployeeProfile()">Submit</button>
+  <button class="btn btn-warning m-2" *ngIf="data!=null"  (click)="update_profile()">Update</button>
+  <button class="btn btn-primary m-2" *ngIf="data==null" (click)="create_profile()">create</button>
   </div>
 </div>
