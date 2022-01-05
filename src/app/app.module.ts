@@ -72,7 +72,7 @@ import { ViewApplicationsComponent } from './admin-dashboard/view-applications/v
     provideStorage(():any => {
       if (environment.useEmulators) {
         const firestorage = getStorage();
-        connectStorageEmulator(firestorage, '192.168.111.86', 4200); // <---- Firestorage Port
+        connectStorageEmulator(firestorage, '192.168.224.100', 4200); // <---- Firestorage Port
         return firestorage;
       } else
         getStorage();

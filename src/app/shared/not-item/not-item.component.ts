@@ -10,15 +10,17 @@ export class NotItemComponent implements OnInit {
 
   @Input("data") data:any;
   constructor(private http:HttpClient) { }
-
+  userType:any = '';
   ngOnInit(): void {
+    let data = JSON.parse(localStorage.getItem('loginData')??'');
+    this.userType = data.type;
   }
 
   deleteNot(id:any){
     let header = new HttpHeaders()
    .set('content-type','application/json')
    .set('Access-Control-Allow-Origin', '*');
-    this.http.post('http://192.168.111.86:8000/delete_not',{id:id},{headers:header}).subscribe((res)=>{
+    this.http.post('http://192.168.224.100:8000/delete_not',{id:id},{headers:header}).subscribe((res)=>{
       console.log(res);
       window.location.reload();
     })

@@ -1,6 +1,10 @@
 <div class="card">
-  <div class="head p-1 m-2 text-primary h4">
-    Student Applications
+  <div class="head p-1 m-2 text-primar d-flex row">
+    <div class="col-sm-6">Student Applications</div>
+    <select class="form-select col mx-2" (change)="filterCategory($event)">
+      <option *ngFor="let value of companies" value="{{value}}">{{value}}</option>
+    </select>
+    <button class="btn btn-success col-sm-2" (click)="Download()">Download</button>
   </div>
   <div class="table-responsive-ms">
       <table class="table table-hover table-light">

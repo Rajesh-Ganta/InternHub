@@ -26,6 +26,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
 def fetch_data():
 	conn = sql.connect("internhub.db")
 	data = {}
@@ -33,7 +35,7 @@ def fetch_data():
 	cur.execute("SELECT * FROM USERS")
 	rows = cur.fetchall()
 	for row in rows:
-		data[row[0]] = {"fname":row[1],"email":row[2],"user_type":row[3]}
+		data[row[0]] = {"fname":row[1],"email":row[2],"user_type":row[3],"phone":row[4]}
 	conn.close()
 	return data
 
@@ -43,16 +45,17 @@ def get_userdata():
 
 @app.post('/userdata')
 async def user_data(req:Request):
-	conn = sql.connect("internhub.db")
-	data = await req.json()
-	sid = data["data"]["sid"]
-	full_name = data["data"]["name"]
-	email = data["data"]["email"]
-	user_type = data["data"]["userType"]
-	sqli = "INSERT INTO USERS(sid,full_name,email,user_type) VALUES(?,?,?,?)"
-	conn.execute(sqli,(sid,full_name,email,user_type))
-	conn.commit()
-	return data
+  conn = sql.connect("internhub.db")
+  data = await req.json()
+  sid = data["data"]["sid"]
+  full_name = data["data"]["name"]
+  email = data["data"]["email"]
+  phone = data["data"]["phone"]
+  user_type = data["data"]["userType"]
+  sqli = "INSERT INTO USERS(sid,full_name,email,user_type,phone) VALUES(?,?,?,?,?)"
+  conn.execute(sqli,(sid,full_name,email,user_type,phone))
+  conn.commit()
+  return data
 
 @app.post('/register')
 async def user_data(req:Request):
@@ -76,7 +79,7 @@ def fetch_note_data():
     cur.execute("SELECT * FROM NOTIFICATION")
     rows = cur.fetchall()
     for row in rows:
-    	data.append({"notification_id":row[0],"logo":row[1],"company_name":row[2],"tag_line":row[3],"isDelete":row[4],"isViewed":row[5]})
+      data.append({"notification_id":row[0],"logo":row[1],"company_name":row[2],"tag_line":row[3],"isDelete":row[4],"isViewed":row[5]})
     con.close()
     return data
 
@@ -233,7 +236,7 @@ def send_mails(receiver = "S160215@rguktsklm.ac.in"):
         There is a Notice posted in Placement Portal InternHub.<br>
         About an Intern or Job Oppurtunity <br>
         Visit the website and go through the details of offer<br>
-        Note: Complete your registration process as early as possible <a href="http://192.168.111.86:4200/admindb/posts" target="blank">click here</a>
+        Note: Complete your registration process as early as possible <a href="http://192.168.224.100:4200/admindb/posts" target="blank">click here</a>
       <h4>- Thanks and Regards</h4>
       Team Intern Hub
     </body>
@@ -405,7 +408,7 @@ def fetch_applications():
     cur.execute("SELECT * FROM APPLICATIONS")
     rows = cur.fetchall()
     for row in rows:
-    	data.append({"application_id":row[0],"student_id":row[1],"name":row[2],"email":row[3],"phone":row[4],"company_name":row[5], "applied_time" : row[6], "notice_id": row[7]})
+      data.append({"application_id":row[0],"student_id":row[1],"name":row[2],"email":row[3],"phone":row[4],"company_name":row[5], "applied_time" : row[6], "notice_id": row[7]})
     con.close()
     return data
 
@@ -766,4 +769,4 @@ async def profile_data(email):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, port=8000, host='192.168.111.86')
+    uvicorn.run(app, port=8000, host='192.168.224.100')

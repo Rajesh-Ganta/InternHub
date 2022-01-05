@@ -37,10 +37,11 @@ export class ApplicationPreviewComponent implements OnInit {
     let email = user_data.name
     let sid = user_data.name.split('@')[0]
     let role = user_data.type;
+    const phone =  user_data.phone;
 
     if(this.eligible == true)
     {
-      this.http.post("http://192.168.111.86:8000/insert_application",{"student_id": sid, "name": 'Rajesh', "email" : email, "phone": "9848125637", "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
+      this.http.post("http://192.168.224.100:8000/insert_application",{"student_id": sid, "name": 'Rajesh', "email" : email, "phone": phone, "company_name": this.data["company_name"], "notice_id": this.data["notice_id"]}).subscribe((res)=>{
         console.log(res);
       },(err)=>{
         console.log(err);
