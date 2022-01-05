@@ -228,8 +228,8 @@
 <div class="col p-2" style="margin-left: 80px!important;" *ngIf="currentUser!='admindb'">
 <button class="btn btn-info m-2" *ngIf="step2" (click)="previousStep()">Previous</button>
 <button class="btn btn-warning m-2" *ngIf="step1" (click)="nextStep()">Next</button>
-<button class="btn btn-warning m-2" *ngIf="step2" >Update</button>
-<button class="btn btn-primary m-2" *ngIf="step2" (click)="updateData()">create</button>
+<button class="btn btn-warning m-2" *ngIf="step2"  (click)="update_profile()">Update</button>
+<button class="btn btn-primary m-2" *ngIf="step2" (click)="create_profile()">create</button>
 </div>
 <div class="col " style="margin-left: 80px!important;" *ngIf="currentUser=='admindb'">
   <button class="btn btn-info m-2" (click)="submitEmployeeProfile()">Submit</button>
